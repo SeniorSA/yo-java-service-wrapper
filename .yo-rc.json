@@ -1,0 +1,10 @@
+{
+  "generator-jhipster-module": {
+    "promptValues": {
+      "githubName": "luiznazari",
+      "authorName": "Luiz Nazari",
+      "authorEmail": "luiz.nazari@senior.com.br",
+      "authorUrl": ""
+    }
+  }
+}

@@ -1,0 +1,174 @@
+# ================================================================ #
+
+# Arquivo de configuração do Wrapper.
+# Documentação: http://yajsw.sourceforge.net/
+
+# ================================================================ #
+# Propriedades do Serviço
+# ================================================================ #
+# *ALERTA: NÃO modifique os valores das Propriedades do Serviço enquanto
+# a aplicação utilizando este arquivo de configuração já estiver instalada.
+# Alterações a essas propriedades não irão surtir efeito até o serviço ser
+# reinstalado. Por favor, desinstale o serviço existente ANTES de modificar
+# as propriedades e, então, o serviço poderá ser reinstalado sem complicações.
+
+# Nome de exibição do serviço* quando executado via console, pode conter espaços.
+wrapper.console.title = {{ config.consoleTitle }}
+
+# Nome do serviço*, não pode conter ter espaços. Ex: senior_app.
+# [Wrapper >= v3.3.0] Mesmo que wrapper.name
+wrapper.ntservice.name = {{ config.serviceName }}
+
+# Nome de exibição do serviço*, pode conter espaços.  Ex: Senior App X.
+# [Wrapper >= v3.3.0] Mesmo que wrapper.displayname
+wrapper.ntservice.displayname = {{ config.serviceDisplayName }}
+
+# Descrição do serviço*. Ex.: Senior Data Integration Executor is a web server that allows you to execute transformations and jobs remotely.
+# [Wrapper >= v3.3.0] Mesmo que wrapper.description
+wrapper.ntservice.description = {{ config.serviceDescription }}
+
+# Modo de iniciação do serviço* (AUTO_START, DELAY_START ou DEMAND_START).
+wrapper.ntservice.starttype = {{ config.serviceStartType }}
+
+# Permite que o sistema interaja com o desktop*.
+wrapper.ntservice.interactive = false
+
+# Permite o uso de propriedades do wrapper numeradas não sequencialmente.
+wrapper.ignore_sequence_gaps = TRUE
+
+# Não iniciar o serviço quando o aquivo PID já existir.
+wrapper.pidfile.strict = TRUE
+
+# Para Sistemas operacionais Posix: diretório em que será criado os arquivos de link K... e S...
+# Exemplo: Em caso de Linux Ubuntu:
+# wrapper.daemon.run_level_dir = /etc/rcX.d
+# Irá criar os links:
+# /etc/rc5.d/K99<wrapper.name>
+# /etc/rc5.d/S99<wrapper.name>
+wrapper.daemon.run_level_dir = ${if (new File('\/etc\/rc0.d').exists()) return '\/etc\/rcX.d' else return '\/etc\/init.d\/rcX.d'}
+
+# ================================================================ #
+# Java e JVM
+# ================================================================ #
+
+# Versão da JVM
+wrapper.java.command.minVersion = {{ config.java.minVersion }}
+
+# Diretório de trabalho. Ex.: ${senior_app}\\app, onde ${senior_app} é uma variável de ambiente do sistema oparacional apontando para a pasta do aplicativo.
+{% if config.workingDir %}
+wrapper.working.dir = {{ config.workingDir }}
+{% endif %}
+
+# Classe Java principal. Essa classe precisa implementar a interface WrapperListener
+# ou garantr que a classe WrapperManager está inicializada. Meis detalhes na seção de
+# integração da documentação.
+wrapper.java.mainclass = org.tanukisoftware.wrapper.WrapperJarApp
+
+# Classe principal da aplicação.
+wrapper.java.app.mainclass = {{ config.java.mainClass }}
+
+# Diretório da Biblioteca do Java (local do Wrapper.DLL ou libwrapper.so).
+wrapper.java.library.path.1 = ../lib
+
+# Diretório temporário.
+wrapper.tmp.path = ${jna_tmpdir}
+
+# Parâmetros da JVM.
+wrapper.java.additional.1 = -Xmx512m
+wrapper.java.additional.2 = -Dorg.mortbay.util.URI.charset = UTF-8
+wrapper.java.additional.3 = -Djava.library.path=${senior_etl}\\integration\\libswt\\win64\\win64
+wrapper.java.additional.4 = -DKETTLE_HOME=${senior_etl}\\integration
+{% if config.java.encoding %}
+wrapper.java.additional.5 = -Dfile.encoding={{ config.java.encoding }}
+{% endif %}
+
+# Configurações de chamada da aplicação
+# -------------------------------------
+
+
+wrapper.java.app.jar = {{ config.java.jar }}
+wrapper.java.command = {{ config.java.command }}
+{% for param in config.java.parameters %}
+wrapper.app.parameter.{{ loop.index }} = {{ param }}
+{% endfor %}
+{% for classpath in config.java.classpaths %}
+wrapper.java.classpath.{{ loop.index }} = {{ classpath }}
+{% endfor %}
+
+# wrapper.java.app.jar = [INFORMAR_CAMINHO_PARA_O_JAR_DO_APP] Ex: ${senior_etl}\\integration\\launcher\\launcher.jar
+# wrapper.java.command = [INFORMAR_CAMINHO_PARA_O_JAVA_EMBARCADO] Ex:${senior_etl}\\jdk1.8.0_172\\bin\\java.exe
+# wrapper.app.parameter.1 = -main
+# wrapper.app.parameter.2 = [INFORMAR_NOME_DA_CLASSE_PRINCIPAL]
+# wrapper.app.parameter.3 = [INFORMAR_PARAMETROS_DO_JAR]
+# wrapper.app.parameter.4 = [INFORMAR_PARAMETROS_DO_JAR]
+
+# Vert.x + Jspare:
+# wrapper.app.parameter.1 = ../lib/volkswagen-api.jar
+# wrapper.app.parameter.2 = run
+# wrapper.app.parameter.3 = br.com.senior.volkswagen.ApiVerticle
+# wrapper.app.parameter.4 = -conf
+# wrapper.app.parameter.5 = "../conf/conf.json"
+# wrapper.app.parameter.6 = -Dvertx.disableDnsResolver=true
+
+# Wrapper JVM Checks
+# ------------------
+
+# Detecção de Threads em DeadLock na JVM (Requer Standard Edition).
+wrapper.check.deadlock = TRUE
+wrapper.check.deadlock.interval = 60
+wrapper.check.deadlock.action = RESTART
+wrapper.check.deadlock.output = FULL
+
+# Detecção de Out Of Memory.
+# Ignore saída -verbose:class para evitar falsos positivos.
+wrapper.filter.trigger.1000 = [Loaded java.lang.OutOfMemoryError
+wrapper.filter.action.1000 = NONE
+wrapper.filter.trigger.1001 = java.lang.OutOfMemoryError
+wrapper.filter.action.1001 = RESTART
+wrapper.filter.message.1001 = The JVM has run out of memory.
+
+# ================================================================ #
+# Extras
+# ================================================================ #
+
+wrapper.on_exit.0 = SHUTDOWN
+wrapper.on_exit.default = RESTART
+wrapper.filter.trigger.0 = Exception
+wrapper.filter.script.0 = scripts\/trayMessage.gv
+wrapper.filter.script.0.args = Exception
+
+# Habilita JMX.
+wrapper.jmx = true
+wrapper.jmx.rmi.port = 12345
+wrapper.jmx.rmi.user = senior
+wrapper.jmx.rmi.password = senior
+
+# ================================================================ #
+# LOG
+# ================================================================ #
+
+# Habilita logs de Debug do Wrapper.
+# wrapper.debug = TRUE
+
+# Log em console
+# --------------
+
+wrapper.console.loglevel = INFO
+wrapper.console.format = PM
+
+# Log em arquivo
+# --------------
+
+wrapper.logfile = ${wrapper_home}\/log\/wrapper.log
+wrapper.logfile.format = LPTM
+# Tamanho máximo (em bytes) do arquivo de log. Para tamanho ilimitado, utilize 0 (zero).
+# Pode ser abreviado com os sufixos 'k' (kb) or 'm' (mb). Exemplo: 10m = 10 megabytes.
+wrapper.logfile.maxsize = 10m
+# Número máximo de arquivos de log, ao atingir o limite, os arquivos mais antigos serão
+# deletados. Para quantidade ilimitada, utilize 0 (zero).
+wrapper.logfile.maxfiles = 10
+
+# Log do sistema (sys/event)
+# --------------------------
+
+wrapper.syslog.loglevel = NONE

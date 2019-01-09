@@ -1,0 +1,2024 @@
+{
+    "project": {
+        "$": {
+            "xmlns": "http://maven.apache.org/POM/4.0.0",
+            "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+            "xsi:schemaLocation": "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+        },
+        "modelVersion": [
+            "4.0.0"
+        ],
+        "groupId": [
+            "edu.jhipster.microservice"
+        ],
+        "artifactId": [
+            "testmicroservice"
+        ],
+        "version": [
+            "0.0.1-SNAPSHOT"
+        ],
+        "packaging": [
+            "war"
+        ],
+        "name": [
+            "Testmicroservice"
+        ],
+        "repositories": [
+            "\n        \n    "
+        ],
+        "properties": [
+            {
+                "maven.version": [
+                    "3.0.0"
+                ],
+                "java.version": [
+                    "1.8"
+                ],
+                "scala.version": [
+                    "2.12.6"
+                ],
+                "node.version": [
+                    "v10.14.1"
+                ],
+                "npm.version": [
+                    "6.4.1"
+                ],
+                "project.build.sourceEncoding": [
+                    "UTF-8"
+                ],
+                "project.reporting.outputEncoding": [
+                    "UTF-8"
+                ],
+                "project.testresult.directory": [
+                    "${project.build.directory}/test-results"
+                ],
+                "maven.build.timestamp.format": [
+                    "yyyyMMddHHmmss"
+                ],
+                "maven.compiler.source": [
+                    "${java.version}"
+                ],
+                "maven.compiler.target": [
+                    "${java.version}"
+                ],
+                "argLine": [
+                    "-Djava.security.egd=file:/dev/./urandom -Xmx256m"
+                ],
+                "m2e.apt.activation": [
+                    "jdt_apt"
+                ],
+                "run.addResources": [
+                    "false"
+                ],
+                "profile.no-liquibase": [
+                    ""
+                ],
+                "profile.swagger": [
+                    ""
+                ],
+                "profile.tls": [
+                    ""
+                ],
+                "jhipster-dependencies.version": [
+                    "2.0.29"
+                ],
+                "spring-boot.version": [
+                    "2.0.7.RELEASE"
+                ],
+                "hibernate.version": [
+                    "5.2.17.Final"
+                ],
+                "javassist.version": [
+                    "3.22.0-GA"
+                ],
+                "liquibase.version": [
+                    "3.5.5"
+                ],
+                "liquibase-hibernate5.version": [
+                    "3.6"
+                ],
+                "validation-api.version": [
+                    "2.0.1.Final"
+                ],
+                "mapstruct.version": [
+                    "1.2.0.Final"
+                ],
+                "maven-clean-plugin.version": [
+                    "3.1.0"
+                ],
+                "maven-compiler-plugin.version": [
+                    "3.8.0"
+                ],
+                "maven-eclipse-plugin.version": [
+                    "2.10"
+                ],
+                "maven-enforcer-plugin.version": [
+                    "3.0.0-M2"
+                ],
+                "maven-resources-plugin.version": [
+                    "3.1.0"
+                ],
+                "maven-surefire-plugin.version": [
+                    "2.22.1"
+                ],
+                "maven-war-plugin.version": [
+                    "3.2.2"
+                ],
+                "jib-maven-plugin.version": [
+                    "0.9.11"
+                ],
+                "jacoco-maven-plugin.version": [
+                    "0.8.2"
+                ],
+                "lifecycle-mapping.version": [
+                    "1.0.0"
+                ],
+                "scala-maven-plugin.version": [
+                    "3.4.2"
+                ],
+                "sonar-maven-plugin.version": [
+                    "3.5.0.1254"
+                ],
+                "git-commit-id-plugin.version": [
+                    "2.2.5"
+                ],
+                "sonar.host.url": [
+                    "http://localhost:9001"
+                ],
+                "sonar.exclusions": [
+                    "src/main/webapp/content/**/*.*, src/main/webapp/i18n/*.js, target/www/**/*.*"
+                ],
+                "sonar.issue.ignore.multicriteria": [
+                    "S3437,S4502,S4684,UndocumentedApi,BoldAndItalicTagsCheck"
+                ],
+                "sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.resourceKey": [
+                    "src/main/webapp/app/**/*.*"
+                ],
+                "sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.ruleKey": [
+                    "Web:BoldAndItalicTagsCheck"
+                ],
+                "sonar.issue.ignore.multicriteria.S3437.resourceKey": [
+                    "src/main/java/**/*"
+                ],
+                "sonar.issue.ignore.multicriteria.S3437.ruleKey": [
+                    "squid:S3437"
+                ],
+                "sonar.issue.ignore.multicriteria.UndocumentedApi.resourceKey": [
+                    "src/main/java/**/*"
+                ],
+                "sonar.issue.ignore.multicriteria.UndocumentedApi.ruleKey": [
+                    "squid:UndocumentedApi"
+                ],
+                "sonar.issue.ignore.multicriteria.S4502.resourceKey": [
+                    "src/main/java/**/*"
+                ],
+                "sonar.issue.ignore.multicriteria.S4502.ruleKey": [
+                    "squid:S4502"
+                ],
+                "sonar.issue.ignore.multicriteria.S4684.resourceKey": [
+                    "src/main/java/**/*"
+                ],
+                "sonar.issue.ignore.multicriteria.S4684.ruleKey": [
+                    "squid:S4684"
+                ],
+                "sonar.jacoco.reportPaths": [
+                    "${project.testresult.directory}/coverage/jacoco/jacoco.exec"
+                ],
+                "sonar.java.codeCoveragePlugin": [
+                    "jacoco"
+                ],
+                "sonar.sources": [
+                    "${project.basedir}/src/main/"
+                ],
+                "sonar.surefire.reportsPath": [
+                    "${project.testresult.directory}/surefire-reports"
+                ],
+                "sonar.tests": [
+                    "${project.basedir}/src/test/"
+                ]
+            }
+        ],
+        "dependencyManagement": [
+            {
+                "dependencies": [
+                    {
+                        "dependency": [
+                            {
+                                "groupId": [
+                                    "io.github.jhipster"
+                                ],
+                                "artifactId": [
+                                    "jhipster-dependencies"
+                                ],
+                                "version": [
+                                    "${jhipster-dependencies.version}"
+                                ],
+                                "type": [
+                                    "pom"
+                                ],
+                                "scope": [
+                                    "import"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "dependencies": [
+            {
+                "dependency": [
+                    {
+                        "groupId": [
+                            "io.github.jhipster"
+                        ],
+                        "artifactId": [
+                            "jhipster-framework"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-cache"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.dropwizard.metrics"
+                        ],
+                        "artifactId": [
+                            "metrics-core"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.dropwizard.metrics"
+                        ],
+                        "artifactId": [
+                            "metrics-annotation"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.dropwizard.metrics"
+                        ],
+                        "artifactId": [
+                            "metrics-json"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.prometheus"
+                        ],
+                        "artifactId": [
+                            "simpleclient"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.prometheus"
+                        ],
+                        "artifactId": [
+                            "simpleclient_dropwizard"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.prometheus"
+                        ],
+                        "artifactId": [
+                            "simpleclient_servlet"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.dropwizard.metrics"
+                        ],
+                        "artifactId": [
+                            "metrics-jcache"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.dropwizard.metrics"
+                        ],
+                        "artifactId": [
+                            "metrics-jvm"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.dropwizard.metrics"
+                        ],
+                        "artifactId": [
+                            "metrics-servlet"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.dropwizard.metrics"
+                        ],
+                        "artifactId": [
+                            "metrics-servlets"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "com.fasterxml.jackson.datatype"
+                        ],
+                        "artifactId": [
+                            "jackson-datatype-hibernate5"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "com.fasterxml.jackson.datatype"
+                        ],
+                        "artifactId": [
+                            "jackson-datatype-hppc"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "com.fasterxml.jackson.datatype"
+                        ],
+                        "artifactId": [
+                            "jackson-datatype-jsr310"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "com.fasterxml.jackson.module"
+                        ],
+                        "artifactId": [
+                            "jackson-module-afterburner"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "com.h2database"
+                        ],
+                        "artifactId": [
+                            "h2"
+                        ],
+                        "scope": [
+                            "test"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "com.jayway.jsonpath"
+                        ],
+                        "artifactId": [
+                            "json-path"
+                        ],
+                        "scope": [
+                            "test"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.springfox"
+                        ],
+                        "artifactId": [
+                            "springfox-swagger2"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.springfox"
+                        ],
+                        "artifactId": [
+                            "springfox-bean-validators"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "com.mattbertolini"
+                        ],
+                        "artifactId": [
+                            "liquibase-slf4j"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "com.ryantenney.metrics"
+                        ],
+                        "artifactId": [
+                            "metrics-spring"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "com.zaxxer"
+                        ],
+                        "artifactId": [
+                            "HikariCP"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "commons-io"
+                        ],
+                        "artifactId": [
+                            "commons-io"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.apache.commons"
+                        ],
+                        "artifactId": [
+                            "commons-lang3"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "javax.cache"
+                        ],
+                        "artifactId": [
+                            "cache-api"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.assertj"
+                        ],
+                        "artifactId": [
+                            "assertj-core"
+                        ],
+                        "scope": [
+                            "test"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.ehcache"
+                        ],
+                        "artifactId": [
+                            "ehcache"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.hibernate"
+                        ],
+                        "artifactId": [
+                            "hibernate-jcache"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.hibernate"
+                        ],
+                        "artifactId": [
+                            "hibernate-jpamodelgen"
+                        ],
+                        "scope": [
+                            "provided"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.hibernate"
+                        ],
+                        "artifactId": [
+                            "hibernate-envers"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.hibernate.validator"
+                        ],
+                        "artifactId": [
+                            "hibernate-validator"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.liquibase"
+                        ],
+                        "artifactId": [
+                            "liquibase-core"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "net.logstash.logback"
+                        ],
+                        "artifactId": [
+                            "logstash-logback-encoder"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.postgresql"
+                        ],
+                        "artifactId": [
+                            "postgresql"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.mapstruct"
+                        ],
+                        "artifactId": [
+                            "mapstruct-jdk8"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.mapstruct"
+                        ],
+                        "artifactId": [
+                            "mapstruct-processor"
+                        ],
+                        "scope": [
+                            "provided"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-configuration-processor"
+                        ],
+                        "scope": [
+                            "provided"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-loader-tools"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-actuator"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-aop"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-data-jpa"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-logging"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-mail"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-security"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-thymeleaf"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-web"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-test"
+                        ],
+                        "scope": [
+                            "test"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-test"
+                        ],
+                        "scope": [
+                            "test"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.security"
+                        ],
+                        "artifactId": [
+                            "spring-security-test"
+                        ],
+                        "scope": [
+                            "test"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.zalando"
+                        ],
+                        "artifactId": [
+                            "problem-spring-web"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.jsonwebtoken"
+                        ],
+                        "artifactId": [
+                            "jjwt-api"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.jsonwebtoken"
+                        ],
+                        "artifactId": [
+                            "jjwt-impl"
+                        ],
+                        "scope": [
+                            "runtime"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "io.jsonwebtoken"
+                        ],
+                        "artifactId": [
+                            "jjwt-jackson"
+                        ],
+                        "scope": [
+                            "runtime"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.cloud"
+                        ],
+                        "artifactId": [
+                            "spring-cloud-starter"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.cloud"
+                        ],
+                        "artifactId": [
+                            "spring-cloud-starter-netflix-ribbon"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.cloud"
+                        ],
+                        "artifactId": [
+                            "spring-cloud-starter-netflix-hystrix"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.retry"
+                        ],
+                        "artifactId": [
+                            "spring-retry"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.cloud"
+                        ],
+                        "artifactId": [
+                            "spring-cloud-starter-netflix-eureka-client"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.cloud"
+                        ],
+                        "artifactId": [
+                            "spring-cloud-starter-config"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.cloud"
+                        ],
+                        "artifactId": [
+                            "spring-cloud-starter-openfeign"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.boot"
+                        ],
+                        "artifactId": [
+                            "spring-boot-starter-cloud-connectors"
+                        ]
+                    },
+                    {
+                        "groupId": [
+                            "org.springframework.security"
+                        ],
+                        "artifactId": [
+                            "spring-security-data"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "build": [
+            {
+                "defaultGoal": [
+                    "spring-boot:run"
+                ],
+                "plugins": [
+                    {
+                        "plugin": [
+                            {
+                                "groupId": [
+                                    "org.apache.maven.plugins"
+                                ],
+                                "artifactId": [
+                                    "maven-compiler-plugin"
+                                ],
+                                "configuration": [
+                                    {
+                                        "annotationProcessorPaths": [
+                                            {
+                                                "path": [
+                                                    {
+                                                        "groupId": [
+                                                            "org.mapstruct"
+                                                        ],
+                                                        "artifactId": [
+                                                            "mapstruct-processor"
+                                                        ],
+                                                        "version": [
+                                                            "${mapstruct.version}"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "groupId": [
+                                                            "org.hibernate"
+                                                        ],
+                                                        "artifactId": [
+                                                            "hibernate-jpamodelgen"
+                                                        ],
+                                                        "version": [
+                                                            "${hibernate.version}"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "groupId": [
+                                    "org.apache.maven.plugins"
+                                ],
+                                "artifactId": [
+                                    "maven-eclipse-plugin"
+                                ]
+                            },
+                            {
+                                "groupId": [
+                                    "org.apache.maven.plugins"
+                                ],
+                                "artifactId": [
+                                    "maven-enforcer-plugin"
+                                ]
+                            },
+                            {
+                                "groupId": [
+                                    "org.apache.maven.plugins"
+                                ],
+                                "artifactId": [
+                                    "maven-resources-plugin"
+                                ]
+                            },
+                            {
+                                "groupId": [
+                                    "org.apache.maven.plugins"
+                                ],
+                                "artifactId": [
+                                    "maven-surefire-plugin"
+                                ]
+                            },
+                            {
+                                "groupId": [
+                                    "org.jacoco"
+                                ],
+                                "artifactId": [
+                                    "jacoco-maven-plugin"
+                                ]
+                            },
+                            {
+                                "groupId": [
+                                    "org.sonarsource.scanner.maven"
+                                ],
+                                "artifactId": [
+                                    "sonar-maven-plugin"
+                                ]
+                            },
+                            {
+                                "groupId": [
+                                    "org.liquibase"
+                                ],
+                                "artifactId": [
+                                    "liquibase-maven-plugin"
+                                ]
+                            },
+                            {
+                                "groupId": [
+                                    "org.springframework.boot"
+                                ],
+                                "artifactId": [
+                                    "spring-boot-maven-plugin"
+                                ],
+                                "executions": [
+                                    {
+                                        "execution": [
+                                            {
+                                                "goals": [
+                                                    {
+                                                        "goal": [
+                                                            "repackage"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "configuration": [
+                                    {
+                                        "mainClass": [
+                                            "${start-class}"
+                                        ],
+                                        "executable": [
+                                            "true"
+                                        ],
+                                        "fork": [
+                                            "true"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "groupId": [
+                                    "com.google.cloud.tools"
+                                ],
+                                "artifactId": [
+                                    "jib-maven-plugin"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "pluginManagement": [
+                    {
+                        "plugins": [
+                            {
+                                "plugin": [
+                                    {
+                                        "groupId": [
+                                            "org.apache.maven.plugins"
+                                        ],
+                                        "artifactId": [
+                                            "maven-compiler-plugin"
+                                        ],
+                                        "version": [
+                                            "${maven-compiler-plugin.version}"
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "pl.project13.maven"
+                                        ],
+                                        "artifactId": [
+                                            "git-commit-id-plugin"
+                                        ],
+                                        "version": [
+                                            "${git-commit-id-plugin.version}"
+                                        ],
+                                        "executions": [
+                                            {
+                                                "execution": [
+                                                    {
+                                                        "goals": [
+                                                            {
+                                                                "goal": [
+                                                                    "revision"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "configuration": [
+                                            {
+                                                "failOnNoGitDirectory": [
+                                                    "false"
+                                                ],
+                                                "generateGitPropertiesFile": [
+                                                    "true"
+                                                ],
+                                                "includeOnlyProperties": [
+                                                    {
+                                                        "includeOnlyProperty": [
+                                                            "^git.commit.id.abbrev$",
+                                                            "^git.commit.id.describe$",
+                                                            "^git.branch$"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.jacoco"
+                                        ],
+                                        "artifactId": [
+                                            "jacoco-maven-plugin"
+                                        ],
+                                        "version": [
+                                            "${jacoco-maven-plugin.version}"
+                                        ],
+                                        "executions": [
+                                            {
+                                                "execution": [
+                                                    {
+                                                        "id": [
+                                                            "pre-unit-tests"
+                                                        ],
+                                                        "goals": [
+                                                            {
+                                                                "goal": [
+                                                                    "prepare-agent"
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "configuration": [
+                                                            {
+                                                                "destFile": [
+                                                                    "${project.testresult.directory}/coverage/jacoco/jacoco.exec"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": [
+                                                            "post-unit-test"
+                                                        ],
+                                                        "phase": [
+                                                            "test"
+                                                        ],
+                                                        "goals": [
+                                                            {
+                                                                "goal": [
+                                                                    "report"
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "configuration": [
+                                                            {
+                                                                "dataFile": [
+                                                                    "${project.testresult.directory}/coverage/jacoco/jacoco.exec"
+                                                                ],
+                                                                "outputDirectory": [
+                                                                    "${project.testresult.directory}/coverage/jacoco"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "com.google.cloud.tools"
+                                        ],
+                                        "artifactId": [
+                                            "jib-maven-plugin"
+                                        ],
+                                        "version": [
+                                            "${jib-maven-plugin.version}"
+                                        ],
+                                        "configuration": [
+                                            {
+                                                "from": [
+                                                    {
+                                                        "image": [
+                                                            "openjdk:8-jre-alpine"
+                                                        ]
+                                                    }
+                                                ],
+                                                "to": [
+                                                    {
+                                                        "image": [
+                                                            "testmicroservice:latest"
+                                                        ]
+                                                    }
+                                                ],
+                                                "container": [
+                                                    {
+                                                        "entrypoint": [
+                                                            {
+                                                                "shell": [
+                                                                    "sh"
+                                                                ],
+                                                                "option": [
+                                                                    "-c"
+                                                                ],
+                                                                "arg": [
+                                                                    "chmod +x /entrypoint.sh && sync && /entrypoint.sh"
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "ports": [
+                                                            {
+                                                                "port": [
+                                                                    "9011"
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "environment": [
+                                                            {
+                                                                "SPRING_OUTPUT_ANSI_ENABLED": [
+                                                                    "ALWAYS"
+                                                                ],
+                                                                "JHIPSTER_SLEEP": [
+                                                                    "0"
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "useCurrentTimestamp": [
+                                                            "true"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.liquibase"
+                                        ],
+                                        "artifactId": [
+                                            "liquibase-maven-plugin"
+                                        ],
+                                        "version": [
+                                            "${liquibase.version}"
+                                        ],
+                                        "configuration": [
+                                            {
+                                                "changeLogFile": [
+                                                    "src/main/resources/config/liquibase/master.xml"
+                                                ],
+                                                "diffChangeLogFile": [
+                                                    "src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml"
+                                                ],
+                                                "driver": [
+                                                    ""
+                                                ],
+                                                "url": [
+                                                    ""
+                                                ],
+                                                "defaultSchemaName": [
+                                                    ""
+                                                ],
+                                                "username": [
+                                                    "testmicroservice"
+                                                ],
+                                                "password": [
+                                                    ""
+                                                ],
+                                                "referenceUrl": [
+                                                    "hibernate:spring:edu.jhipster.microservice.domain?dialect=&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+                                                ],
+                                                "verbose": [
+                                                    "true"
+                                                ],
+                                                "logging": [
+                                                    "debug"
+                                                ]
+                                            }
+                                        ],
+                                        "dependencies": [
+                                            {
+                                                "dependency": [
+                                                    {
+                                                        "groupId": [
+                                                            "org.javassist"
+                                                        ],
+                                                        "artifactId": [
+                                                            "javassist"
+                                                        ],
+                                                        "version": [
+                                                            "${javassist.version}"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "groupId": [
+                                                            "org.liquibase.ext"
+                                                        ],
+                                                        "artifactId": [
+                                                            "liquibase-hibernate5"
+                                                        ],
+                                                        "version": [
+                                                            "${liquibase-hibernate5.version}"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "groupId": [
+                                                            "org.springframework.boot"
+                                                        ],
+                                                        "artifactId": [
+                                                            "spring-boot-starter-data-jpa"
+                                                        ],
+                                                        "version": [
+                                                            "${spring-boot.version}"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "groupId": [
+                                                            "javax.validation"
+                                                        ],
+                                                        "artifactId": [
+                                                            "validation-api"
+                                                        ],
+                                                        "version": [
+                                                            "${validation-api.version}"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "artifactId": [
+                                            "maven-clean-plugin"
+                                        ],
+                                        "version": [
+                                            "${maven-clean-plugin.version}"
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.apache.maven.plugins"
+                                        ],
+                                        "artifactId": [
+                                            "maven-eclipse-plugin"
+                                        ],
+                                        "version": [
+                                            "${maven-eclipse-plugin.version}"
+                                        ],
+                                        "configuration": [
+                                            {
+                                                "downloadSources": [
+                                                    "true"
+                                                ],
+                                                "downloadJavadocs": [
+                                                    "true"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.apache.maven.plugins"
+                                        ],
+                                        "artifactId": [
+                                            "maven-enforcer-plugin"
+                                        ],
+                                        "version": [
+                                            "${maven-enforcer-plugin.version}"
+                                        ],
+                                        "executions": [
+                                            {
+                                                "execution": [
+                                                    {
+                                                        "id": [
+                                                            "enforce-versions"
+                                                        ],
+                                                        "goals": [
+                                                            {
+                                                                "goal": [
+                                                                    "enforce"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "configuration": [
+                                            {
+                                                "rules": [
+                                                    {
+                                                        "requireMavenVersion": [
+                                                            {
+                                                                "message": [
+                                                                    "You are running an older version of Maven. JHipster requires at least Maven ${maven.version}"
+                                                                ],
+                                                                "version": [
+                                                                    "[${maven.version},)"
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "requireJavaVersion": [
+                                                            {
+                                                                "message": [
+                                                                    "You are running an incompatible version of Java. JHipster requires JDK ${java.version}"
+                                                                ],
+                                                                "version": [
+                                                                    "[1.8,1.9)"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.apache.maven.plugins"
+                                        ],
+                                        "artifactId": [
+                                            "maven-resources-plugin"
+                                        ],
+                                        "version": [
+                                            "${maven-resources-plugin.version}"
+                                        ],
+                                        "executions": [
+                                            {
+                                                "execution": [
+                                                    {
+                                                        "id": [
+                                                            "default-resources"
+                                                        ],
+                                                        "phase": [
+                                                            "validate"
+                                                        ],
+                                                        "goals": [
+                                                            {
+                                                                "goal": [
+                                                                    "copy-resources"
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "configuration": [
+                                                            {
+                                                                "outputDirectory": [
+                                                                    "target/classes"
+                                                                ],
+                                                                "useDefaultDelimiters": [
+                                                                    "false"
+                                                                ],
+                                                                "delimiters": [
+                                                                    {
+                                                                        "delimiter": [
+                                                                            "#"
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "resources": [
+                                                                    {
+                                                                        "resource": [
+                                                                            {
+                                                                                "directory": [
+                                                                                    "src/main/resources/"
+                                                                                ],
+                                                                                "filtering": [
+                                                                                    "true"
+                                                                                ],
+                                                                                "includes": [
+                                                                                    {
+                                                                                        "include": [
+                                                                                            "config/*.yml"
+                                                                                        ]
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "directory": [
+                                                                                    "src/main/resources/"
+                                                                                ],
+                                                                                "filtering": [
+                                                                                    "false"
+                                                                                ],
+                                                                                "excludes": [
+                                                                                    {
+                                                                                        "exclude": [
+                                                                                            "config/*.yml"
+                                                                                        ]
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": [
+                                                            "jib-www-resources"
+                                                        ],
+                                                        "phase": [
+                                                            "verify"
+                                                        ],
+                                                        "goals": [
+                                                            {
+                                                                "goal": [
+                                                                    "copy-resources"
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "configuration": [
+                                                            {
+                                                                "outputDirectory": [
+                                                                    "target/classes/static/"
+                                                                ],
+                                                                "resources": [
+                                                                    {
+                                                                        "resource": [
+                                                                            {
+                                                                                "directory": [
+                                                                                    "target/www"
+                                                                                ],
+                                                                                "filtering": [
+                                                                                    "false"
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.apache.maven.plugins"
+                                        ],
+                                        "artifactId": [
+                                            "maven-surefire-plugin"
+                                        ],
+                                        "version": [
+                                            "${maven-surefire-plugin.version}"
+                                        ],
+                                        "configuration": [
+                                            {
+                                                "runOrder": [
+                                                    "alphabetical"
+                                                ],
+                                                "useSystemClassLoader": [
+                                                    "false"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.apache.maven.plugins"
+                                        ],
+                                        "artifactId": [
+                                            "maven-war-plugin"
+                                        ],
+                                        "version": [
+                                            "${maven-war-plugin.version}"
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "net.alchim31.maven"
+                                        ],
+                                        "artifactId": [
+                                            "scala-maven-plugin"
+                                        ],
+                                        "version": [
+                                            "${scala-maven-plugin.version}"
+                                        ],
+                                        "executions": [
+                                            {
+                                                "execution": [
+                                                    {
+                                                        "id": [
+                                                            "compile"
+                                                        ],
+                                                        "phase": [
+                                                            "compile"
+                                                        ],
+                                                        "goals": [
+                                                            {
+                                                                "goal": [
+                                                                    "add-source",
+                                                                    "compile"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": [
+                                                            "test-compile"
+                                                        ],
+                                                        "phase": [
+                                                            "test-compile"
+                                                        ],
+                                                        "goals": [
+                                                            {
+                                                                "goal": [
+                                                                    "add-source",
+                                                                    "testCompile"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "configuration": [
+                                            {
+                                                "recompileMode": [
+                                                    "incremental"
+                                                ],
+                                                "verbose": [
+                                                    "true"
+                                                ],
+                                                "scalaVersion": [
+                                                    "${scala.version}"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.sonarsource.scanner.maven"
+                                        ],
+                                        "artifactId": [
+                                            "sonar-maven-plugin"
+                                        ],
+                                        "version": [
+                                            "${sonar-maven-plugin.version}"
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.springframework.boot"
+                                        ],
+                                        "artifactId": [
+                                            "spring-boot-maven-plugin"
+                                        ],
+                                        "version": [
+                                            "${spring-boot.version}"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "profiles": [
+            {
+                "profile": [
+                    {
+                        "id": [
+                            "no-liquibase"
+                        ],
+                        "properties": [
+                            {
+                                "profile.no-liquibase": [
+                                    ",no-liquibase"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": [
+                            "swagger"
+                        ],
+                        "properties": [
+                            {
+                                "profile.swagger": [
+                                    ",swagger"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": [
+                            "tls"
+                        ],
+                        "properties": [
+                            {
+                                "profile.tls": [
+                                    ",tls"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": [
+                            "dev"
+                        ],
+                        "activation": [
+                            {
+                                "activeByDefault": [
+                                    "true"
+                                ]
+                            }
+                        ],
+                        "dependencies": [
+                            {
+                                "dependency": [
+                                    {
+                                        "groupId": [
+                                            "org.springframework.boot"
+                                        ],
+                                        "artifactId": [
+                                            "spring-boot-starter-undertow"
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.springframework.boot"
+                                        ],
+                                        "artifactId": [
+                                            "spring-boot-devtools"
+                                        ],
+                                        "optional": [
+                                            "true"
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "com.h2database"
+                                        ],
+                                        "artifactId": [
+                                            "h2"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "build": [
+                            {
+                                "plugins": [
+                                    {
+                                        "plugin": [
+                                            {
+                                                "groupId": [
+                                                    "org.apache.maven.plugins"
+                                                ],
+                                                "artifactId": [
+                                                    "maven-war-plugin"
+                                                ],
+                                                "configuration": [
+                                                    {
+                                                        "failOnMissingWebXml": [
+                                                            "false"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "properties": [
+                            {
+                                "spring.profiles.active": [
+                                    "dev${profile.tls}${profile.no-liquibase}"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": [
+                            "prod"
+                        ],
+                        "dependencies": [
+                            {
+                                "dependency": [
+                                    {
+                                        "groupId": [
+                                            "org.springframework.boot"
+                                        ],
+                                        "artifactId": [
+                                            "spring-boot-starter-undertow"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "build": [
+                            {
+                                "plugins": [
+                                    {
+                                        "plugin": [
+                                            {
+                                                "artifactId": [
+                                                    "maven-clean-plugin"
+                                                ],
+                                                "configuration": [
+                                                    {
+                                                        "filesets": [
+                                                            {
+                                                                "fileset": [
+                                                                    {
+                                                                        "directory": [
+                                                                            "target/www/"
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "groupId": [
+                                                    "org.apache.maven.plugins"
+                                                ],
+                                                "artifactId": [
+                                                    "maven-war-plugin"
+                                                ],
+                                                "configuration": [
+                                                    {
+                                                        "failOnMissingWebXml": [
+                                                            "false"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "groupId": [
+                                                    "org.springframework.boot"
+                                                ],
+                                                "artifactId": [
+                                                    "spring-boot-maven-plugin"
+                                                ],
+                                                "configuration": [
+                                                    {
+                                                        "mainClass": [
+                                                            "${start-class}"
+                                                        ],
+                                                        "executable": [
+                                                            "true"
+                                                        ]
+                                                    }
+                                                ],
+                                                "executions": [
+                                                    {
+                                                        "execution": [
+                                                            {
+                                                                "goals": [
+                                                                    {
+                                                                        "goal": [
+                                                                            "build-info"
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "groupId": [
+                                                    "pl.project13.maven"
+                                                ],
+                                                "artifactId": [
+                                                    "git-commit-id-plugin"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "properties": [
+                            {
+                                "spring.profiles.active": [
+                                    "prod${profile.swagger}${profile.no-liquibase}"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": [
+                            "cc"
+                        ],
+                        "dependencies": [
+                            {
+                                "dependency": [
+                                    {
+                                        "groupId": [
+                                            "org.springframework.boot"
+                                        ],
+                                        "artifactId": [
+                                            "spring-boot-starter-undertow"
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.springframework.boot"
+                                        ],
+                                        "artifactId": [
+                                            "spring-boot-devtools"
+                                        ],
+                                        "optional": [
+                                            "true"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "build": [
+                            {
+                                "plugins": [
+                                    {
+                                        "plugin": [
+                                            {
+                                                "groupId": [
+                                                    "org.apache.maven.plugins"
+                                                ],
+                                                "artifactId": [
+                                                    "maven-war-plugin"
+                                                ],
+                                                "configuration": [
+                                                    {
+                                                        "failOnMissingWebXml": [
+                                                            "false"
+                                                        ],
+                                                        "warSourceDirectory": [
+                                                            "src/main/webapp/"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "groupId": [
+                                                    "org.springframework.boot"
+                                                ],
+                                                "artifactId": [
+                                                    "spring-boot-maven-plugin"
+                                                ],
+                                                "configuration": [
+                                                    {
+                                                        "mainClass": [
+                                                            "${start-class}"
+                                                        ],
+                                                        "executable": [
+                                                            "true"
+                                                        ],
+                                                        "fork": [
+                                                            "true"
+                                                        ],
+                                                        "addResources": [
+                                                            "true"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "groupId": [
+                                                    "org.apache.maven.plugins"
+                                                ],
+                                                "artifactId": [
+                                                    "maven-compiler-plugin"
+                                                ],
+                                                "executions": [
+                                                    {
+                                                        "execution": [
+                                                            {
+                                                                "id": [
+                                                                    "default-compile"
+                                                                ],
+                                                                "phase": [
+                                                                    "none"
+                                                                ]
+                                                            },
+                                                            {
+                                                                "id": [
+                                                                    "default-testCompile"
+                                                                ],
+                                                                "phase": [
+                                                                    "none"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "groupId": [
+                                                    "net.alchim31.maven"
+                                                ],
+                                                "artifactId": [
+                                                    "scala-maven-plugin"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "properties": [
+                            {
+                                "spring.profiles.active": [
+                                    "dev,swagger"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": [
+                            "zipkin"
+                        ],
+                        "dependencies": [
+                            {
+                                "dependency": [
+                                    {
+                                        "groupId": [
+                                            "org.springframework.cloud"
+                                        ],
+                                        "artifactId": [
+                                            "spring-cloud-starter-zipkin"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": [
+                            "IDE"
+                        ],
+                        "dependencies": [
+                            {
+                                "dependency": [
+                                    {
+                                        "groupId": [
+                                            "org.mapstruct"
+                                        ],
+                                        "artifactId": [
+                                            "mapstruct-processor"
+                                        ]
+                                    },
+                                    {
+                                        "groupId": [
+                                            "org.hibernate"
+                                        ],
+                                        "artifactId": [
+                                            "hibernate-jpamodelgen"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": [
+                            "eclipse"
+                        ],
+                        "activation": [
+                            {
+                                "property": [
+                                    {
+                                        "name": [
+                                            "m2e.version"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "build": [
+                            {
+                                "pluginManagement": [
+                                    {
+                                        "plugins": [
+                                            {
+                                                "plugin": [
+                                                    {
+                                                        "groupId": [
+                                                            "org.eclipse.m2e"
+                                                        ],
+                                                        "artifactId": [
+                                                            "lifecycle-mapping"
+                                                        ],
+                                                        "version": [
+                                                            "${lifecycle-mapping.version}"
+                                                        ],
+                                                        "configuration": [
+                                                            {
+                                                                "lifecycleMappingMetadata": [
+                                                                    {
+                                                                        "pluginExecutions": [
+                                                                            {
+                                                                                "pluginExecution": [
+                                                                                    {
+                                                                                        "pluginExecutionFilter": [
+                                                                                            {
+                                                                                                "groupId": [
+                                                                                                    "org.jacoco"
+                                                                                                ],
+                                                                                                "artifactId": [
+                                                                                                    "\n                                                    jacoco-maven-plugin\n"
+                                                                                                ],
+                                                                                                "versionRange": [
+                                                                                                    "\n                                                    ${jacoco-maven-plugin.version}\n                                                "
+                                                                                                ],
+                                                                                                "goals": [
+                                                                                                    {
+                                                                                                        "goal": [
+                                                                                                            "prepare-agent"
+                                                                                                        ]
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                        ],
+                                                                                        "action": [
+                                                                                            {
+                                                                                                "ignore": [
+                                                                                                    ""
+                                                                                                ]
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

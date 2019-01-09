@@ -1,0 +1,40 @@
+{
+    "generator-jhipster": {
+        "promptValues": {
+            "packageName": "edu.jhipster.microservice",
+            "nativeLanguage": "en"
+        },
+        "jhipsterVersion": "5.7.2",
+        "applicationType": "microservice",
+        "baseName": "testmicroservice",
+        "packageName": "edu.jhipster.microservice",
+        "packageFolder": "edu/jhipster/microservice",
+        "serverPort": "9011",
+        "authenticationType": "jwt",
+        "cacheProvider": "ehcache",
+        "enableHibernateCache": true,
+        "websocket": false,
+        "databaseType": "sql",
+        "devDatabaseType": "h2Memory",
+        "prodDatabaseType": "postgresql",
+        "searchEngine": false,
+        "messageBroker": false,
+        "serviceDiscoveryType": "eureka",
+        "buildTool": "maven",
+        "enableSwaggerCodegen": false,
+        "jwtSecretKey": "YTM2YzhiZmNkNGFlYTgxZTAwYzk1OTMzYzVjNmE1NDRmZjNjNWM2ZWMxNzYwNzRiYWUyZWY3NzNhOGI1MTg3YjBhNmM5MjhmNTUzOTRkN2YyYmY0NTY5Y2QxYzM5ZDNjMzdkMTcxMjZiOTg0YmE2ZTJmNjBjN2MwY2Q1YTFhNWI=",
+        "testFrameworks": [],
+        "jhiPrefix": "jhi",
+        "otherModules": [],
+        "enableTranslation": true,
+        "clientPackageManager": "npm",
+        "nativeLanguage": "en",
+        "languages": [
+            "en",
+            "it",
+            "pt-br"
+        ],
+        "skipClient": true,
+        "skipUserManagement": true
+    }
+}
