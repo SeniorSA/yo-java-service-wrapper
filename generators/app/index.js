@@ -1,6 +1,5 @@
 const fs = require('fs');
 const chalk = require('chalk');
-const semver = require('semver');
 const { Framework } = require('./src/model');
 const packagejs = require('../../package.json');
 const getConfigFor = require('./src/framework-config');
@@ -34,14 +33,6 @@ module.exports = class extends BaseGenerator {
 
             displayLogo() {
                 this.printSeniorFswLogo();
-            },
-
-            checkJhipster() {
-                const currentJhipsterVersion = this.jhipsterAppConfig.jhipsterVersion;
-                const minimumJhipsterVersion = packagejs.dependencies['generator-jhipster'];
-                if (!semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
-                    this.warning(`\nSeu projeto usava uma versão antiga do JHipster (${currentJhipsterVersion})... você precisa de pelo menos a versão (${minimumJhipsterVersion})\n`);
-                }
             }
         };
     }
@@ -89,7 +80,7 @@ module.exports = class extends BaseGenerator {
             fs.mkdirSync(FOLDER_WRAPPER);
         }
 
-        fs.writeFileSync(`${FOLDER_WRAPPER}/wrapper.conf`, wrapperConfigFileContent);
+        fs.writeFileSync(`${FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfigFileContent);
     }
 
     end() {
@@ -143,7 +134,7 @@ module.exports = class extends BaseGenerator {
         this.log(chalk.green(' __________________________________________________________________________________________________________\n'));
 
         const moduleWorkingDir = chalk.yellow(`${process.cwd().replace(/\\/g,'/')}/${FOLDER_WRAPPER}`);
-        this.log(chalk.white(`\nOs arquivos serão gerados em: ${moduleWorkingDir}\n`));
+        this.log(chalk.white(`Os arquivos serão gerados em: ${moduleWorkingDir}\n`));
     }
 
 };

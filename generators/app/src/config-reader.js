@@ -41,22 +41,37 @@ class MavenConfigReader extends DefaultConfigReader {
     }
 
     _extractInfoFromPom(config, pom) {
-        config.consoleTitle = pom.name[0];
-        config.serviceName = pom.artifactId[0];
-        config.serviceDisplayName = pom.name[0];
-        config.serviceDescription = (pom.description ? pom.description[0] : '') || pom.name[0];
+        config.consoleTitle = this._extracText(pom.name);
+        config.serviceName = this._extracText(pom.artifactId);
+        config.serviceDisplayName = this._extracText(pom.name);
+        config.serviceDescription = this._extracText(pom.description);
         config.javaMinVersion = this._extractJavaVersion(pom);
     }
 
     _extractJavaVersion(pom) {
         const propJavaVersion = pom.properties && pom.properties[0]['java.version'];
         if (propJavaVersion) {
-            return propJavaVersion[0];
+            return this._extracText(propJavaVersion);
         }
 
-        const compilerPlugin = pom.build[0].plugins[0].plugin.find(plugin => plugin.artifactId[0] === 'maven-compiler-plugin');
+        const compilerPlugin = this._findPlugin(pom, 'maven-compiler-plugin');
         if (compilerPlugin && compilerPlugin.configuration) {
             return compilerPlugin.configuration.target;
+        }
+
+        return '';
+    }
+
+    _findPlugin(pom, pluginArtifactId) {
+        return pom.build[0].plugins[0].plugin.find(plugin => plugin.artifactId[0] === pluginArtifactId);
+    }
+
+    _extracText(tag) {
+        if (tag) {
+            const content = tag[0];
+            if (content) {
+                return String(content).trim();
+            }
         }
 
         return '';
