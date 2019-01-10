@@ -9,7 +9,9 @@ class FrameworkConfig {
     }
 
     configure(wrapperConfig, answers) {
-        // WrapperConfig
+        wrapperConfig.consoleTitle = `senior-${wrapperConfig.consoleTitle}`;
+        wrapperConfig.serviceName = `senior-${wrapperConfig.serviceName}`;
+        wrapperConfig.serviceDisplayName = `Senior - ${wrapperConfig.serviceDisplayName}`;
      }
 
     applyPromptsDefaultValues(config) {
@@ -39,6 +41,7 @@ class JspareConfig extends FrameworkConfig {
     }
 
     configure(wrapperConfig, answers) {
+        super.configure(wrapperConfig, answers);
         // # wrapper.app.parameter.1 = ../lib/volkswagen-api.jar
         // # wrapper.app.parameter.2 = run
         // # wrapper.app.parameter.3 = br.com.senior.volkswagen.ApiVerticle

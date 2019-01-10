@@ -1,54 +1,59 @@
 {
-    "name": "generator-jhipster-senior-fsw",
-    "version": "1.0.0-snapshot",
-    "description": "Gerador de aplicações base da Fábrica de Software da Senior Sistemas",
-    "keywords": [
-        "yeoman-generator",
-        "jhipster-module",
-        "jhipster-5"
-    ],
-    "homepage": "https://github.com/luiznazari/generator-jhipster-senior-fsw",
-    "author": {
-        "name": "Luiz Nazari",
-        "email": "luiz.nazari@senior.com.br"
-    },
-    "files": [
-        "generators"
-    ],
-    "main": "generators/app/index.js",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/luiznazari/generator-jhipster-senior-fsw.git"
-    },
-    "dependencies": {
-        "chalk": "2.4.1",
-        "generator-jhipster": ">=5.0.0",
-        "mkdirp": "0.5.1",
-        "nunjucks": "^3.1.6",
-        "xml2js": "^0.4.19",
-        "yeoman-generator": "3.1.1"
-    },
-    "devDependencies": {
-        "eslint": "5.1.0",
-        "eslint-config-airbnb-base": "13.0.0",
-        "eslint-plugin-import": "2.13.0",
-        "fs-extra": "6.0.1",
-        "mocha": "5.2.0",
-        "yeoman-assert": "3.1.1",
-        "yeoman-test": "2.0.0"
-    },
-    "scripts": {
-        "pretest": "eslint .",
-        "lint": "eslint .",
-        "lint-fix": "eslint . --fix",
-        "release": "git push && git push --tags && npm publish",
-        "release:patch": "npm version patch -a -m \"Update to %s\" && npm run release",
-        "release:minor": "npm version minor -a -m \"Update to %s\" && npm run release",
-        "release:major": "npm version major -a -m \"Update to %s\" && npm run release",
-        "test": "mocha test"
-    },
-    "license": "Apache-2.0",
-    "bugs": {
-        "url": "https://github.com/luiznazari/generator-jhipster-senior-fsw/issues"
-    }
+  "name": "generator-senior-service-wrapper",
+  "version": "1.0.0-snapshot",
+  "description": "Gerador de aplicações base da Fábrica de Software da Senior Sistemas",
+  "main": "generators/app/index.js",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Luiz Nazari",
+    "email": "luiz.nazari@senior.com.br"
+  },
+  "homepage": "https://github.com/luiznazari/generator-senior-service-wrapper",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luiznazari/generator-senior-service-wrapper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luiznazari/generator-senior-service-wrapper/issues"
+  },
+  "keywords": [
+    "senior",
+    "yajsw",
+    "wrapper",
+    "service",
+    "yeoman-generator",
+    "jhipster-module",
+    "jhipster-5"
+  ],
+  "files": [
+    "generators"
+  ],
+  "scripts": {
+    "pretest": "eslint .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "release": "git push && git push --tags && npm publish",
+    "release:patch": "npm version patch -a -m \"Update to %s\" && npm run release",
+    "release:minor": "npm version minor -a -m \"Update to %s\" && npm run release",
+    "release:major": "npm version major -a -m \"Update to %s\" && npm run release",
+    "test": "mocha test"
+  },
+  "dependencies": {
+    "chalk": "2.4.1",
+    "ncp": "^2.0.0",
+    "generator-jhipster": ">=5.0.0",
+    "mkdirp": "0.5.1",
+    "nunjucks": "^3.1.6",
+    "xml2js": "^0.4.19",
+    "yeoman-generator": "3.1.1"
+  },
+  "devDependencies": {
+    "eslint": "5.1.0",
+    "eslint-config-airbnb-base": "13.0.0",
+    "eslint-plugin-import": "2.13.0",
+    "fs-extra": "6.0.1",
+    "mocha": "5.2.0",
+    "yeoman-assert": "3.1.1",
+    "yeoman-test": "2.0.0"
+  }
 }

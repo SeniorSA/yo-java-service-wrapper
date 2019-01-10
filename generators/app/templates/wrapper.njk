@@ -1,12 +1,12 @@
-# ================================================================ #
+# ================================================================= #
 
 # Arquivo de configuração do Wrapper.
 # Documentação: http://yajsw.sourceforge.net/
 #               http://yajsw.sourceforge.net/YAJSW%20Configuration%20Parameters.html
 
-# ================================================================ #
+# ================================================================= #
 # Propriedades do Serviço
-# ================================================================ #
+# ================================================================= #
 # *ALERTA: NÃO modifique os valores das Propriedades do Serviço enquanto
 # a aplicação utilizando este arquivo de configuração já estiver instalada.
 # Alterações a essas propriedades não irão surtir efeito até o serviço ser
@@ -39,9 +39,9 @@ wrapper.ntservice.interactive = false
 # /etc/rc5.d/S99<wrapper.name>
 wrapper.daemon.run_level_dir = ${if (new File('\/etc\/rc0.d').exists()) return '\/etc\/rcX.d' else return '\/etc\/init.d\/rcX.d'}
 
-# ================================================================ #
+# ================================================================= #
 # Java e JVM
-# ================================================================ #
+# ================================================================= #
 {% if config.workingDir %}
 # Diretório de trabalho da aplicação Java. Ex.: ${senior_app}\\app, onde ${senior_app} é uma variável de ambiente do sistema oparacional apontando para a pasta do aplicativo.
 wrapper.working.dir = {{ config.workingDir }}
@@ -49,15 +49,13 @@ wrapper.working.dir = {{ config.workingDir }}
 # Classe executada quando o wrapper inicia a aplicação. Essa classe precisa implementar
 # a interface WrapperListener ou garantr que a classe WrapperManager está inicializada.
 # Mais detalhes na seção de integração da documentação.
-# Padrão: org.rzo.yajsw.WrapperMain
+# Padrão: org.rzo.yajsw.app.WrapperJVMMain
 # Alternativa: org.tanukisoftware.wrapper.WrapperJarApp
 wrapper.java.mainclass = {{ config.wrapperMainClass }}
 {% if config.appMainClass %}
 # Classe principal da aplicação. Não é requerido quando utilizado com org.tanukisoftware.wrapper.WrapperJarApp.
 wrapper.java.app.mainclass = {{ config.appMainClass }}
 {% endif %}
-# Diretório da Biblioteca do Java (local do Wrapper.DLL ou libwrapper.so).
-wrapper.java.library.path.1 = ../lib
 
 # Diretório temporário.
 wrapper.tmp.path = ${jna_tmpdir}
@@ -74,7 +72,7 @@ wrapper.java.additional.{{ loop.index }} = {{ additional }}
 wrapper.java.command = {{ config.javaCommand }}
 wrapper.java.command.minVersion = {{ config.javaMinVersion }}
 {% endif %}
-wrapper.java.app.jar = {{ config.jar }}
+wrapper.java.app.jar = {{ config.workingDir }}/lib/{{ config.jar }}
 {% for param in config.java.jarParameters %}
 wrapper.app.parameter.{{ loop.index }} = {{ param }}
 {% endfor %}
@@ -92,25 +90,43 @@ wrapper.filter.trigger.deadlock.tray = wrapper.java.monitor.deadlock: DEADLOCK I
 wrapper.filter.script.deadlock.tray = scripts/trayMessage.gv
 wrapper.filter.script.deadlock.tray.args = Deadlock Detected
 
-# ================================================================ #
-# Extras
-# ================================================================ #
+# ================================================================= #
+# Exit Code Properties
+# Restart on non zero exit code
+# ================================================================= #
 
 wrapper.on_exit.0 = SHUTDOWN
 wrapper.on_exit.default = RESTART
+
+# ================================================================= #
+# Posix Signal Properties
+# Restart on non 9 signal code
+# ================================================================= #
+
+wrapper.on_signal.9 = SHUTDOWN
+wrapper.on_signal.default = RESTART
+
+# ================================================================= #
+# Trigger actions on console output
+# ================================================================= #
+
+# On Exception show message in system tray
 wrapper.filter.trigger.0 = Exception
-wrapper.filter.script.0 = scripts\/trayMessage.gv
+wrapper.filter.script.0 = scripts/trayMessage.gv
 wrapper.filter.script.0.args = Exception
 
-# Habilita JMX.
+# ================================================================= #
+# Habilitar JMX
+# ================================================================= #
+
 wrapper.jmx = true
 wrapper.jmx.rmi.port = 12345
 wrapper.jmx.rmi.user = senior
 wrapper.jmx.rmi.password = senior
 
-# ================================================================ #
+# ================================================================= #
 # LOG
-# ================================================================ #
+# ================================================================= #
 
 # Habilita logs de Debug do Wrapper.
 # wrapper.debug = TRUE
@@ -124,7 +140,7 @@ wrapper.console.format = PM
 # Log em arquivo
 # --------------
 
-wrapper.logfile = ${wrapper_home}\/log\/wrapper.log
+wrapper.logfile = ${wrapper_home}/log/wrapper.log
 wrapper.logfile.format = LPTM
 # Tamanho máximo (em bytes) do arquivo de log. Para tamanho ilimitado, utilize 0 (zero).
 # Pode ser abreviado com os sufixos 'k' (kb) or 'm' (mb). Exemplo: 10m = 10 megabytes.

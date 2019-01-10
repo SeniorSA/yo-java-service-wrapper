@@ -1,4 +1,5 @@
 const fs = require('fs');
+const ncp = require('ncp').ncp;
 const chalk = require('chalk');
 const { Framework } = require('./src/model');
 const packagejs = require('../../package.json');
@@ -13,16 +14,14 @@ require.extensions['.njk'] = (module, filename) => {
     module.exports = fs.readFileSync(filename, 'utf8');
 };
 
-const FOLDER_WRAPPER = 'wrapper';
-const SENIOR_FSW_WRAPPER_GENERATOR = 'Gerador de Wrapper (JAJSW) Senior-FSW';
+const FOLDER_WRAPPER = 'service-wrapper';
+const SENIOR_FSW_WRAPPER_GENERATOR = 'Gerador de Wrapper (YAJSW) Senior-FSW';
 
 module.exports = class extends BaseGenerator {
 
     get initializing() {
         return {
-            init(args) {
-                // TODO
-            },
+            init(args) {},
 
             readConfig() {
                 this.jhipsterAppConfig = this.getAllJhipsterConfig();
@@ -49,6 +48,11 @@ module.exports = class extends BaseGenerator {
                 value: Framework.JSPARE,
                 name: 'Vert.x + Jspare'
             }]
+        }, {
+            type: 'confirm',
+            name: 'installService',
+            message: 'Instalar o serviço nesse computador?',
+            default: false
         }];
 
         const done = this.async();
@@ -70,17 +74,37 @@ module.exports = class extends BaseGenerator {
     }
 
     writing() {
-        this.log('Gerando o wrapper...\n');
+        this.log('Gerando o wrapper...');
     }
 
     install() {
-        const wrapperConfigFileContent = createWrapperConfigFile(this.frameworkConfig, this.appProps);
+        const done = this.async();
+        new Promise((resolve, reject) => {
+            const projectWrapperDir = fs.realpathSync(FOLDER_WRAPPER);
+            const generatorWrapperDir = `${this.sourceRoot()}/yajsw`;
 
-        if (!fs.existsSync(FOLDER_WRAPPER)) {
-            fs.mkdirSync(FOLDER_WRAPPER);
+            this.log(chalk.grey('Copiando os arquivos do wrapper...'));
+            ncp(generatorWrapperDir, projectWrapperDir, error => error ? reject(error) : resolve());
+
+        }).then(() => {
+            this.log(chalk.grey('Gerando configurações...\n'));
+            const wrapperConfigFileContent = createWrapperConfigFile(this.frameworkConfig, this.appProps);
+            fs.writeFileSync(`${FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfigFileContent);
+
+            this._installService();
+            done();
+
+        }).catch(error => {
+            this.error(error);
+            done();
+            throw new Error('Falha ao copiar arquivos do wrapper.');
+        });
+    }
+
+    _installService() {
+        if (this.appProps.installService) {
+            this.log(chalk.grey('TODO install the service'));
         }
-
-        fs.writeFileSync(`${FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfigFileContent);
     }
 
     end() {
@@ -107,7 +131,7 @@ module.exports = class extends BaseGenerator {
 
         return configReader.read()
             .catch(error => {
-                this.log(`[ERROR] ${error.message}${error.error ? (' - Causa: ' + error.error) : ''}`);
+                this.error(`${error.message}${error.error ? (' - Causa: ' + error.error) : ''}`);
                 throw error;
             });
     }

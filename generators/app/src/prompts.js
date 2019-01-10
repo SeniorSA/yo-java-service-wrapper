@@ -31,7 +31,8 @@ const defaultServicePrompts = [
     }, {
         name: 'workingDir',
         required: false,
-        message: 'Qual o diretório de trabalho do aplicativo?',
+        message: 'Qual o diretório de trabalho do aplicativo? (caminho relativo do projeto no Sistema Operacional)',
+        default: '${wrapper_home}'
     }
 ];
 
@@ -39,11 +40,11 @@ const defaultJvmPrompts = [
     {
         name: 'wrapperMainClass',
         required: true,
-        default: 'org.rzo.yajsw.WrapperMain',
+        default: 'org.rzo.yajsw.app.WrapperJVMMain',
         message: 'Qual a classe executada quando o wrapper inicia a aplicação?',
         choices: [{
             name: 'YAJSW WrapperMain',
-            value: 'org.rzo.yajsw.WrapperMain'
+            value: 'org.rzo.yajsw.app.WrapperJVMMain'
         }, {
             name: 'Tanuki Software WrapperJarApp (não exige classe principal da aplicação)',
             value: 'org.tanukisoftware.wrapper.WrapperJarApp'
