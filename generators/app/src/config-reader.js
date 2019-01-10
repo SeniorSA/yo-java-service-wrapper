@@ -1,6 +1,6 @@
 const fs = require('fs');
 const xml2js = require('xml2js');
-const { WrapperConfig } = require('./config');
+const { WrapperConfig } = require('./model');
 
 class DefaultConfigReader {
 
@@ -41,11 +41,11 @@ class MavenConfigReader extends DefaultConfigReader {
     }
 
     _extractInfoFromPom(config, pom) {
-        config.consoleTitle = pom.name;
-        config.serviceName = pom.artifactId;
-        config.serviceDisplayName = pom.name;
-        config.serviceDescription = pom.description || pom.name;
-        config.java.minVersion = this._extractJavaVersion(pom);
+        config.consoleTitle = pom.name[0];
+        config.serviceName = pom.artifactId[0];
+        config.serviceDisplayName = pom.name[0];
+        config.serviceDescription = (pom.description ? pom.description[0] : '') || pom.name[0];
+        config.javaMinVersion = this._extractJavaVersion(pom);
     }
 
     _extractJavaVersion(pom) {

@@ -1,9 +1,5 @@
 class WrapperConfig {
 
-    static get OPTIONALS() {
-        return Object.freeze(['workingDir']);
-    }
-
     constructor() {
         /** Nome de exibição do serviço quando executado via console, pode conter espaços. */
         this.consoleTitle = null;
@@ -14,7 +10,7 @@ class WrapperConfig {
         /** Nome de exibição do serviço, pode conter espaços. */
         this.serviceDisplayName = null;
 
-        /** Descrição do serviço */
+        /** Descrição do serviço. */
         this.serviceDescription = null;
 
         /** Modo de iniciação do serviço. Types: ServiceStartType. */
@@ -23,45 +19,38 @@ class WrapperConfig {
         /** Diretório de trabalho apontando para a pasta do aplicativo. */
         this.workingDir = null;
 
-        this.java = new WrapperJavaConfig();
-    }
-
-}
-
-class WrapperJavaConfig {
-
-    static get OPTIONALS() {
-        return Object.freeze(['encoding', 'parameters', 'classpaths']);
-    }
-
-    constructor() {
         /** Mínima versão requerida da JVM */
-        this.minVersion = null;
+        this.javaMinVersion = null;
 
         /**
-         * [Opcional] Tipo de codificação dos arquivos, quando informado é utilizado como argumento -Dfile.encoding da JVM.
-         * Padrão 'UTF-8'.
+         * Tipo de codificação dos arquivos, quando informado é utilizado como argumento -Dfile.encoding da JVM.
          */
-        this.encoding = 'UTF-8';
+        this.jvmEncoding = 'UTF-8';
+
+        /** Classe principal do wrapper. */
+        this.wrapperMainClass = null;
 
         /** Classe principal da aplicação. */
-        this.mainClass = null;
+        this.appMainClass = null;
 
         /** Caminho para o jar da aplicação. Ex: ${app_dir}/integration/launcher/launcher.jar */
         this.jar = null;
+
+        /** [Opcional] Lista de argumentos do jar. */
+        this.jarParameters = [];
 
         /**
          * Caminho para o java.exe embarcado.
          * Ex.: Ex:${app_dir}/jdk1.8.0_172/bin/java.exe
          * Ex.: %JAVA_HOME%/bin/java
          */
-        this.command = null;
-
-        /** [Opcional] Lista de parâmetros do Java. */
-        this.parameters = [];
+        this.javaCommand = null;
 
         /** [Opcional] Lista dos classpaths do Java. */
         this.classpaths = [];
+
+        /** [Opcional] Lista de parâmetros adicionais da JVM. */
+        this.jvmArguments = [];
     }
 
 }
@@ -74,7 +63,7 @@ const ServiceStartType = Object.freeze({
 
 });
 
-const AppJavaFramework = Object.freeze({
+const Framework = Object.freeze({
 
     JSPARE: 'VERTX_JSPARE',
     SPRING_BOOT: 'SPRING_BOOT'
@@ -83,7 +72,6 @@ const AppJavaFramework = Object.freeze({
 
 module.exports = {
     WrapperConfig,
-    WrapperJavaConfig,
     ServiceStartType,
-    AppJavaFramework
+    Framework
 }

@@ -1,16 +1,21 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const semver = require('semver');
+const { Framework } = require('./src/model');
 const packagejs = require('../../package.json');
+const getConfigFor = require('./src/framework-config');
+const PromptBuilder = require('./src/prompt-builder');
+const createWrapperConfigFile = require('./src/config-wrapper-generator');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
-const jhipsterConstants = require('generator-jhipster/generators/generator-constants');
-const wrapperConfigBuilder = require('./src/config-builder');
-const { AppJavaFramework, ServiceStartType } = require('./src/config');
 const { DefaultConfigReader, MavenConfigReader, NodeConfigReader } = require('./src/config-reader');
+// const jhipsterConstants = require('generator-jhipster/generators/generator-constants');
 
 require.extensions['.njk'] = (module, filename) => {
     module.exports = fs.readFileSync(filename, 'utf8');
 };
+
+const FOLDER_WRAPPER = 'wrapper';
+const SENIOR_FSW_WRAPPER_GENERATOR = 'Gerador de Wrapper (JAJSW) Senior-FSW';
 
 module.exports = class extends BaseGenerator {
 
@@ -29,8 +34,6 @@ module.exports = class extends BaseGenerator {
 
             displayLogo() {
                 this.printSeniorFswLogo();
-
-                this.log(`\nBem-vindo ao gerador ${chalk.bold.yellow('JHipster senior-fsw-wrapper')}! ${chalk.yellow(`v${packagejs.version}\n`)}`);
             },
 
             checkJhipster() {
@@ -44,46 +47,56 @@ module.exports = class extends BaseGenerator {
     }
 
     prompting() {
-        const prompts = [{
+        const promptsFramework = [{
             type: 'list',
             name: 'javaFramework',
-            message: 'Qual framework é usado no projeto?',
+            message: 'Qual é o framework usado no projeto?',
             choices: [{
-                value: AppJavaFramework.SPRING_BOOT,
+                value: Framework.SPRING_BOOT,
                 name: 'Spring Boot'
             }, {
-                value: AppJavaFramework.JSPARE,
+                value: Framework.JSPARE,
                 name: 'Vert.x + Jspare'
-            }]
-        }, {
-            type: 'list',
-            name: 'serviceStartType',
-            message: 'Qual o tipo de inicialização do serviço?',
-            default: ServiceStartType.AUTO_START,
-            choices: [{
-                value: ServiceStartType.AUTO_START,
-                name: 'Automático'
-            }, {
-                value: ServiceStartType.DELAY_START,
-                name: 'Automático (Atraso na inicialização)'
-            }, {
-                value: ServiceStartType.DEMAND_START,
-                name: 'Manual'
             }]
         }];
 
         const done = this.async();
-        this.prompt(prompts).then((props) => {
-            this.props = props;
-            done();
+        this.prompt(promptsFramework).then(setupProps => {
+            this.frameworkConfig = getConfigFor(setupProps.javaFramework);
+
+            this._readConfigurationFromProject().then(projectDefaults => {
+                const prompts = new PromptBuilder(this.frameworkConfig)
+                    .withDefaultValues(projectDefaults)
+                    .build();
+
+                this.prompt(prompts).then(props => {
+                    this.appProps = Object.assign(setupProps, props);
+                    done();
+                });
+            });
         });
+
     }
 
     writing() {
-        this.log('writting...');
+        this.log('Gerando o wrapper...\n');
     }
 
     install() {
+        const wrapperConfigFileContent = createWrapperConfigFile(this.frameworkConfig, this.appProps);
+
+        if (!fs.existsSync(FOLDER_WRAPPER)) {
+            fs.mkdirSync(FOLDER_WRAPPER);
+        }
+
+        fs.writeFileSync(`${FOLDER_WRAPPER}/wrapper.conf`, wrapperConfigFileContent);
+    }
+
+    end() {
+        this.log(`Fim do ${SENIOR_FSW_WRAPPER_GENERATOR}.`);
+    }
+
+    _readConfigurationFromProject() {
         const pomXml = 'pom.xml';
         const packageJson = 'package.json';
 
@@ -101,28 +114,11 @@ module.exports = class extends BaseGenerator {
             configReader = new DefaultConfigReader();
         }
 
-        this.log(`ProjectType: ${this.projectType}`);
-
-        this.log('Lendo configurações do projeto.')
-        configReader.read()
-            .then(wrapperConfig => {
-                const wrapperConfigFileContent = wrapperConfigBuilder.createWrapperConfigFile(wrapperConfig, this.props, jhipsterConstants);
-
-                this.log('Criando diretório \'wrapper\'.');
-                if (!fs.existsSync('wrapper')) {
-                    fs.mkdirSync('wrapper');
-                }
-
-                fs.writeFileSync('wrapper/wrapper.cfg', wrapperConfigFileContent);
-
-            }).catch(error => {
+        return configReader.read()
+            .catch(error => {
                 this.log(`[ERROR] ${error.message}${error.error ? (' - Causa: ' + error.error) : ''}`);
                 throw error;
             });
-    }
-
-    end() {
-        this.log('End of senior-fsw-wrapper generator');
     }
 
     printSeniorFswLogo() {
@@ -133,10 +129,7 @@ module.exports = class extends BaseGenerator {
         this.log(`${chalk.green('  ╚═══██╗  ██╔═══╝    ██║ ╚███║     ██║     ██║   ██║  ██╔══██║    ╚═════╝ ')}${chalk.cyan('  ██╔═══╝     ╚═══██╗  ██║ ██║██║')}`);
         this.log(`${chalk.green(' ██████╔╝  ████████╗  ██║  ╚██║  ████████╗  ████████║  ██║  ╚██╗           ')}${chalk.cyan('  ██║        ██████╔╝  █████████║')}`);
         this.log(`${chalk.green(' ╚═════╝   ╚═══════╝  ╚═╝   ╚═╝  ╚═══════╝  ╚═══════╝  ╚═╝   ╚═╝           ')}${chalk.cyan('  ╚═╝        ╚═════╝   ╚════════╝')}`);
-        this.log('\n');
-        this.log(chalk.white.bold('                                             https://senior.com.br\n'));
-        this.log(chalk.white('Welcome to Senior-FSW Wrapper Generator ') + chalk.yellow(`v${packagejs.version}`));
-        this.log(chalk.white(`Os arquivos serão gerados no diretório: ${chalk.yellow(process.cwd())}`));
+        this.log(chalk.white.bold('\n                                             https://senior.com.br\n'));
 
         if (process.cwd() === this.getUserHome()) {
             this.log(chalk.red.bold('\n️⚠️ ALERTA ⚠️  Você está em seu diretório HOME!'));
@@ -145,8 +138,12 @@ module.exports = class extends BaseGenerator {
         }
 
         this.log(chalk.green(' __________________________________________________________________________________________________________\n'));
+        this.log(chalk.white(`  Bem-vindo ao ${SENIOR_FSW_WRAPPER_GENERATOR} ${chalk.yellow(`v${packagejs.version}`)}!`));
         this.log(chalk.white(`  Documentação para configuração do wrapper em ${chalk.yellow('https://url.com.br')}`));
         this.log(chalk.green(' __________________________________________________________________________________________________________\n'));
+
+        const moduleWorkingDir = chalk.yellow(`${process.cwd().replace(/\\/g,'/')}/${FOLDER_WRAPPER}`);
+        this.log(chalk.white(`\nOs arquivos serão gerados em: ${moduleWorkingDir}\n`));
     }
 
 };

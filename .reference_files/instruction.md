@@ -17,7 +17,7 @@ To begin to work:
 
 ## Example variables and execution
 
-```
+```conf
     Welcome to the JHipster senior-fsw generator! v0.0.0
 
     ? Please put something l
@@ -48,6 +48,24 @@ To begin to work:
     I'm all done. Running npm install for you to install the required dependencies. If this fails, try running the command yourself.
 ```
 
+### YAJSW 
+
+```conf
+# wrapper.java.app.jar = [INFORMAR_CAMINHO_PARA_O_JAR_DO_APP] Ex: ${senior_etl}\\integration\\launcher\\launcher.jar
+# wrapper.java.command = [INFORMAR_CAMINHO_PARA_O_JAVA_EMBARCADO] Ex:${senior_etl}\\jdk1.8.0_172\\bin\\java.exe
+# wrapper.app.parameter.1 = -main
+# wrapper.app.parameter.2 = [INFORMAR_NOME_DA_CLASSE_PRINCIPAL]
+# wrapper.app.parameter.3 = [INFORMAR_PARAMETROS_DO_JAR]
+# wrapper.app.parameter.4 = [INFORMAR_PARAMETROS_DO_JAR]
+
+# Vert.x + Jspare:
+# wrapper.app.parameter.1 = ../lib/volkswagen-api.jar
+# wrapper.app.parameter.2 = run
+# wrapper.app.parameter.3 = br.com.senior.volkswagen.ApiVerticle
+# wrapper.app.parameter.4 = -conf
+# wrapper.app.parameter.5 = "../conf/conf.json"
+# wrapper.app.parameter.6 = -Dvertx.disableDnsResolver=true
+```
 
 ### JHipster Constants:
 
