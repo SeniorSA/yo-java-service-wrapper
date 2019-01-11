@@ -10,9 +10,16 @@ const defaultServicePrompts = [
             if (!input) {
                 return false;
             }
-            if (/\s/.test(input.trim())) {
+
+            const name = input.trim();
+            if (/\s/.test(name)) {
                 return 'Não pode conter espaços!';
             }
+
+            if (!/^[\w-]+$/.test(name)) {
+                return 'Nome inválido: não pode conter espaços e caracteres especiais. (permitido: [A-Za-z0-9-_])';
+            }
+
             return true;
         }
     }, {

@@ -3,7 +3,7 @@ const os = require('os');
 const ncp = require('ncp').ncp;
 const chalk = require('chalk');
 const rimraf = require('rimraf');
-const childProccess =require('child_process');
+const childProccess = require('child_process');
 const { Framework, Constants } = require('./src/model');
 const packagejs = require('../../package.json');
 const getConfigFor = require('./src/framework-config');
@@ -86,10 +86,10 @@ module.exports = class extends BaseGenerator {
         const done = this.async();
         new Promise((resolve, reject) => {
 
-            this.log(chalk.grey(`Removendo conteúdo do diretório /${FOLDER_WRAPPER}...`));
+            this.log(chalk.grey(`Removendo conteúdo do diretório ${FOLDER_WRAPPER}...`));
             rimraf(FOLDER_WRAPPER, error => {
                 if (error) {
-                    reject(error);
+                    reject(`Não foi possível remover o diretório ${fs.realpathSync(FOLDER_WRAPPER)}. Por favor, tente remover manualmente.\nCausa: ${error}`);
                 } else {
                     const projectWrapperDir = `${this.destinationRoot()}/${FOLDER_WRAPPER}`;
                     const generatorWrapperDir = `${this.sourceRoot()}/yajsw`;
@@ -104,8 +104,10 @@ module.exports = class extends BaseGenerator {
             const wrapperConfigFileContent = createWrapperConfigFile(this.frameworkConfig, this.appProps);
             fs.writeFileSync(`${FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfigFileContent);
 
-            this.log(chalk.grey('Copiando jar...'));
-            fs.copyFileSync(this.appProps.jarPath, `${FOLDER_WRAPPER}/lib/${Constants.APP_JAR_NAME}`);
+            if (this.appProps.jarPath) {
+                this.log(chalk.grey('Copiando jar...'));
+                fs.copyFileSync(this.appProps.jarPath, `${FOLDER_WRAPPER}/lib/${Constants.APP_JAR_NAME}`);
+            }
 
             this._installService();
 

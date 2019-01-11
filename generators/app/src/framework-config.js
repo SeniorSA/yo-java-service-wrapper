@@ -1,5 +1,8 @@
-const { Framework, Constants } = require('./model');
+const escapeUnicode = require('escape-unicode');
 const { promptsSpringBoot } = require('./prompts');
+const { Framework, Constants } = require('./model');
+
+const REGEX_SPECIAL_CHARACTERS = /[^\w\s-]/g;
 
 class FrameworkConfig {
 
@@ -9,10 +12,14 @@ class FrameworkConfig {
     }
 
     configure(wrapperConfig, answers) {
-        wrapperConfig.consoleTitle = `senior-${wrapperConfig.consoleTitle}`;
         wrapperConfig.serviceName = `senior-${wrapperConfig.serviceName}`;
-        wrapperConfig.serviceDisplayName = `Senior - ${wrapperConfig.serviceDisplayName}`;
+        wrapperConfig.serviceDisplayName = this._escapeUnicode(`Senior - ${wrapperConfig.serviceDisplayName}`);
+        wrapperConfig.serviceDescription = this._escapeUnicode(wrapperConfig.serviceDescription);
         wrapperConfig.jar = Constants.APP_JAR_NAME;
+    }
+
+    _escapeUnicode(text) {
+        return text.replace(REGEX_SPECIAL_CHARACTERS, specialCharacter => escapeUnicode(specialCharacter));
     }
 
     applyPromptsDefaultValues(config) {
