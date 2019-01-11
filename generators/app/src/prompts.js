@@ -1,8 +1,17 @@
 const fs = require('fs');
+const chalk = require('chalk');
 const { ServiceStartType } = require('./model');
+const discoverFilesByExtension = require('./file-utils').discoverFilesByExtension;
+
+const PREFIX_ALTERNATIVE_QUESTION = chalk.green('  \\- ');
 
 const defaultServicePrompts = [
     {
+        name: 'installService',
+        type: 'confirm',
+        message: 'Instalar o serviço nesse computador?',
+        default: false
+    }, {
         name: 'serviceName',
         required: true,
         message: 'Qual é o nome do serviço? (Não pode conter espaços, ex.: senior_app)',
@@ -39,7 +48,7 @@ const defaultServicePrompts = [
             name: 'Automático',
             value: ServiceStartType.AUTO_START
         }, {
-            name: 'Automático (Atraso na inicialização)',
+            name: 'Automático (Com atraso na inicialização)',
             value: ServiceStartType.DELAY_START
         }, {
             name: 'Manual',
@@ -83,19 +92,35 @@ const promptsSpringBoot = [
     {
         name: 'jarPath',
         required: true,
-        message: 'Qual o JAR/WAR da aplicação (launcher do Spring Boot)? (Caminho relativo ao root do projeto)',
-        validate: input => {
-            const jarRealPath = fs.realpathSync(input);
-            return new Promise((resolve, reject) => {
-                fs.stat(jarRealPath, (err, stats) => {
-                    if (err || !stats.isFile()) {
-                        reject(`JAR/WAR não encontrado: ${jarRealPath}`)
-                    } else {
-                        resolve(true);
-                    }
+        message: 'Qual o JAR/WAR da aplicação (launcher do Spring Boot)?',
+        paginated: true,
+        choices: () => {
+            const rootPath = fs.realpathSync('');
+            const pathChoices = discoverFilesByExtension('', ['.jar', '.war'])
+                .map(filePath => {
+                    return { name: filePath.replace(rootPath, ''), value: filePath }
                 });
+            pathChoices.push({
+                name: 'Outro: informar manualmente',
+                value: 'manual'
             });
+            return pathChoices;
         }
+    }, {
+        name: 'jarPathManual',
+        required: true,
+        message: 'Informe o caminho real do JAR/WAR (relativo ao sistema):',
+        prefix: PREFIX_ALTERNATIVE_QUESTION,
+        when: answers => answers.jarPath === 'manual',
+        validate: input => new Promise((resolve, reject) => {
+            fs.stat(input, (err, stats) => {
+                if (err || !stats.isFile()) {
+                    reject(`JAR/WAR não encontrado: ${input}`)
+                } else {
+                    resolve(true);
+                }
+            });
+        })
     },
     ...defaultJvmPrompts
 ];

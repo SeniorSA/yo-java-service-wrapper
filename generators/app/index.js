@@ -8,7 +8,7 @@ const { Framework, Constants } = require('./src/model');
 const packagejs = require('../../package.json');
 const getConfigFor = require('./src/framework-config');
 const PromptBuilder = require('./src/prompt-builder');
-const createWrapperConfigFile = require('./src/config-wrapper-generator');
+const createWrapperConfig = require('./src/config-wrapper-generator');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const { DefaultConfigReader, MavenConfigReader, NodeConfigReader } = require('./src/config-reader');
 // const jhipsterConstants = require('generator-jhipster/generators/generator-constants');
@@ -53,11 +53,6 @@ module.exports = class extends BaseGenerator {
                 value: Framework.JSPARE,
                 name: 'Vert.x + Jspare'
             }]
-        }, {
-            type: 'confirm',
-            name: 'installService',
-            message: 'Instalar o serviço nesse computador?',
-            default: false
         }];
 
         const done = this.async();
@@ -101,21 +96,21 @@ module.exports = class extends BaseGenerator {
 
         }).then(() => {
             this.log(chalk.grey('Gerando configurações...'));
-            const wrapperConfigFileContent = createWrapperConfigFile(this.frameworkConfig, this.appProps);
-            fs.writeFileSync(`${FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfigFileContent);
+            const wrapperConfig = createWrapperConfig(this.frameworkConfig, this.appProps);
+            fs.writeFileSync(`${FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfig.fileContent);
 
-            if (this.appProps.jarPath) {
+            if (wrapperConfig.jarPath) {
                 this.log(chalk.grey('Copiando jar...'));
-                fs.copyFileSync(this.appProps.jarPath, `${FOLDER_WRAPPER}/lib/${Constants.APP_JAR_NAME}`);
+                fs.copyFileSync(wrapperConfig.jarPath, `${FOLDER_WRAPPER}/lib/${Constants.APP_JAR_NAME}`);
             }
 
             this._installService();
 
+            this._printSuccessMessage();
             done();
 
         }).catch(error => {
             this.error(error);
-            done();
             throw new Error('Falha ao copiar arquivos do wrapper.');
         });
     }
@@ -186,6 +181,10 @@ module.exports = class extends BaseGenerator {
         const moduleWorkingDir = chalk.yellow(`${process.cwd().replace(/\\/g, '/')}/${FOLDER_WRAPPER}`);
         this.log(chalk.white(`Os arquivos serão gerados em: ${moduleWorkingDir}`));
         this.log(chalk.white(`⚠️ ALERTA ⚠️  A pasta ${chalk.yellow(`${FOLDER_WRAPPER}`)} e todos seus arquivos serão removidos!\n`));
+    }
+
+    _printSuccessMessage() {
+        this.success('Service Wrapper gerado com sucesso!!!\n');
     }
 
 };

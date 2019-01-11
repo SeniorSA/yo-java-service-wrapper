@@ -1,7 +1,7 @@
 const nunjucks = require('nunjucks');
 const { WrapperConfig } = require('./model');
 
-function createWrapperConfigFile(frameworkConfig, answers) {
+function createWrapperConfig(frameworkConfig, answers) {
     const config = createConfigFromAnswers(answers);
 
     frameworkConfig.configure(config, answers);
@@ -12,7 +12,8 @@ function createWrapperConfigFile(frameworkConfig, answers) {
 
     validateConfig(config, frameworkConfig.prompts);
 
-    return parseWrapperConfig(config);
+    config.fileContent = parseWrapperConfig(config);
+    return config;
 }
 
 function createConfigFromAnswers(answers) {
@@ -53,4 +54,4 @@ function validateConfig(config, prompts) {
     };
 }
 
-module.exports = createWrapperConfigFile;
+module.exports = createWrapperConfig;

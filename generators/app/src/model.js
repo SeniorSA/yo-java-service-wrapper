@@ -34,6 +34,9 @@ class WrapperConfig {
         this.appMainClass = null;
 
         /** Caminho para o jar da aplicação. Ex: ${app_dir}/integration/launcher/launcher.jar */
+        this.jarPath = null;
+
+        /** Nome do jar da aplicação utilizado pelo wrapper. */
         this.jar = null;
 
         /** [Opcional] Lista de argumentos do jar. */

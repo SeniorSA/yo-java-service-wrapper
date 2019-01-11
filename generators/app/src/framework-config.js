@@ -40,6 +40,14 @@ class SpringBootConfig extends FrameworkConfig {
         super(Framework.SPRING_BOOT, promptsSpringBoot)
     }
 
+    configure(wrapperConfig, answers) {
+        if (answers.jarPathManual) {
+            wrapperConfig.jarPath = answers.jarPathManual;
+        } else {
+            wrapperConfig.jarPath = answers.jarPath;
+        }
+    }
+
 }
 
 class JspareConfig extends FrameworkConfig {

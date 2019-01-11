@@ -21,10 +21,10 @@ module.exports = class PromptBuilder {
     }
 
     _buildCliPromptFor(frameworkPrompt) {
-        const promptQuestion = {
-            ...frameworkPrompt,
-            type: frameworkPrompt.choices ? 'list' : 'input',
-        };
+        const promptQuestion = { ...frameworkPrompt };
+        if (!promptQuestion.type) {
+            promptQuestion.type = frameworkPrompt.choices ? 'list' : 'input';
+        }
         promptQuestion.message = `${chalk.bold(frameworkPrompt.message)}${chalk.red(frameworkPrompt.required ? ' *' : '')}`;
 
         if (frameworkPrompt.required && !frameworkPrompt.default && typeof promptQuestion.validate !== 'function') {
