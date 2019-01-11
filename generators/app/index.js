@@ -1,7 +1,10 @@
 const fs = require('fs');
+const os = require('os');
 const ncp = require('ncp').ncp;
 const chalk = require('chalk');
-const { Framework } = require('./src/model');
+const rimraf = require('rimraf');
+const childProccess =require('child_process');
+const { Framework, Constants } = require('./src/model');
 const packagejs = require('../../package.json');
 const getConfigFor = require('./src/framework-config');
 const PromptBuilder = require('./src/prompt-builder');
@@ -16,12 +19,14 @@ require.extensions['.njk'] = (module, filename) => {
 
 const FOLDER_WRAPPER = 'service-wrapper';
 const SENIOR_FSW_WRAPPER_GENERATOR = 'Gerador de Wrapper (YAJSW) Senior-FSW';
+const CONSOLE_COLOR_GREY = '\u001B[90m';
+const CONSOLE_COLOR_RESET = '\u001B[39m';
 
 module.exports = class extends BaseGenerator {
 
     get initializing() {
         return {
-            init(args) {},
+            init(args) { },
 
             readConfig() {
                 this.jhipsterAppConfig = this.getAllJhipsterConfig();
@@ -80,18 +85,30 @@ module.exports = class extends BaseGenerator {
     install() {
         const done = this.async();
         new Promise((resolve, reject) => {
-            const projectWrapperDir = fs.realpathSync(FOLDER_WRAPPER);
-            const generatorWrapperDir = `${this.sourceRoot()}/yajsw`;
 
-            this.log(chalk.grey('Copiando os arquivos do wrapper...'));
-            ncp(generatorWrapperDir, projectWrapperDir, error => error ? reject(error) : resolve());
+            this.log(chalk.grey(`Removendo conteúdo do diretório /${FOLDER_WRAPPER}...`));
+            rimraf(FOLDER_WRAPPER, error => {
+                if (error) {
+                    reject(error);
+                } else {
+                    const projectWrapperDir = `${this.destinationRoot()}/${FOLDER_WRAPPER}`;
+                    const generatorWrapperDir = `${this.sourceRoot()}/yajsw`;
+
+                    this.log(chalk.grey('Copiando os arquivos do wrapper...'));
+                    ncp(generatorWrapperDir, projectWrapperDir, error => error ? reject(error) : resolve());
+                }
+            });
 
         }).then(() => {
-            this.log(chalk.grey('Gerando configurações...\n'));
+            this.log(chalk.grey('Gerando configurações...'));
             const wrapperConfigFileContent = createWrapperConfigFile(this.frameworkConfig, this.appProps);
             fs.writeFileSync(`${FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfigFileContent);
 
+            this.log(chalk.grey('Copiando jar...'));
+            fs.copyFileSync(this.appProps.jarPath, `${FOLDER_WRAPPER}/lib/${Constants.APP_JAR_NAME}`);
+
             this._installService();
+
             done();
 
         }).catch(error => {
@@ -103,7 +120,14 @@ module.exports = class extends BaseGenerator {
 
     _installService() {
         if (this.appProps.installService) {
-            this.log(chalk.grey('TODO install the service'));
+            this.log(chalk.grey('Instalando o serviço...'));
+            console.log(CONSOLE_COLOR_GREY);
+            if (/win/.test(os.platform())) {
+                childProccess.execSync(`${FOLDER_WRAPPER}\\bat\\installService.bat`);
+            } else {
+                childProccess.execSync('./bin/installService.sh');
+            }
+            console.log(CONSOLE_COLOR_RESET);
         }
     }
 
@@ -157,8 +181,9 @@ module.exports = class extends BaseGenerator {
         this.log(chalk.white(`  Documentação para configuração do wrapper em ${chalk.yellow('https://url.com.br')}`));
         this.log(chalk.green(' __________________________________________________________________________________________________________\n'));
 
-        const moduleWorkingDir = chalk.yellow(`${process.cwd().replace(/\\/g,'/')}/${FOLDER_WRAPPER}`);
-        this.log(chalk.white(`Os arquivos serão gerados em: ${moduleWorkingDir}\n`));
+        const moduleWorkingDir = chalk.yellow(`${process.cwd().replace(/\\/g, '/')}/${FOLDER_WRAPPER}`);
+        this.log(chalk.white(`Os arquivos serão gerados em: ${moduleWorkingDir}`));
+        this.log(chalk.white(`⚠️ ALERTA ⚠️  A pasta ${chalk.yellow(`${FOLDER_WRAPPER}`)} e todos seus arquivos serão removidos!\n`));
     }
 
 };

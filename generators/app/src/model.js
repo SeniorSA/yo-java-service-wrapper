@@ -70,8 +70,15 @@ const Framework = Object.freeze({
 
 });
 
+const Constants = Object.freeze({
+
+    APP_JAR_NAME: 'app.jar'
+
+});
+
 module.exports = {
     WrapperConfig,
     ServiceStartType,
-    Framework
+    Framework,
+    Constants
 }

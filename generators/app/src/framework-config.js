@@ -1,4 +1,4 @@
-const { Framework } = require('./model');
+const { Framework, Constants } = require('./model');
 const { promptsSpringBoot } = require('./prompts');
 
 class FrameworkConfig {
@@ -12,7 +12,8 @@ class FrameworkConfig {
         wrapperConfig.consoleTitle = `senior-${wrapperConfig.consoleTitle}`;
         wrapperConfig.serviceName = `senior-${wrapperConfig.serviceName}`;
         wrapperConfig.serviceDisplayName = `Senior - ${wrapperConfig.serviceDisplayName}`;
-     }
+        wrapperConfig.jar = Constants.APP_JAR_NAME;
+    }
 
     applyPromptsDefaultValues(config) {
         for (const currentCfg in config) {

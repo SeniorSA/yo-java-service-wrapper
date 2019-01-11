@@ -1,10 +1,20 @@
+const fs = require('fs');
 const { ServiceStartType } = require('./model');
 
 const defaultServicePrompts = [
     {
         name: 'serviceName',
         required: true,
-        message: 'Qual é o nome do serviço? (Não pode conter espaços, ex.: senior_app)'
+        message: 'Qual é o nome do serviço? (Não pode conter espaços, ex.: senior_app)',
+        validate: input => {
+            if (!input) {
+                return false;
+            }
+            if (/\s/.test(input.trim())) {
+                return 'Não pode conter espaços!';
+            }
+            return true;
+        }
     }, {
         name: 'serviceDisplayName',
         required: true,
@@ -31,7 +41,7 @@ const defaultServicePrompts = [
     }, {
         name: 'workingDir',
         required: false,
-        message: 'Qual o diretório de trabalho do aplicativo? (caminho relativo do projeto no Sistema Operacional)',
+        message: 'Qual o diretório de trabalho do aplicativo? (Caminho relativo ao root do projeto)',
         default: '${wrapper_home}'
     }
 ];
@@ -58,15 +68,27 @@ const defaultJvmPrompts = [
         required: false,
         message: 'Qual é o encoding da JVM?',
         default: 'UTF-8'
-    }
+    },
 ];
 
 const promptsSpringBoot = [
     ...defaultServicePrompts,
     {
-        name: 'jar',
+        name: 'jarPath',
         required: true,
-        message: 'Qual o JAR da aplicação (launcher do Spring Boot)?'
+        message: 'Qual o JAR/WAR da aplicação (launcher do Spring Boot)? (Caminho relativo ao root do projeto)',
+        validate: input => {
+            const jarRealPath = fs.realpathSync(input);
+            return new Promise((resolve, reject) => {
+                fs.stat(jarRealPath, (err, stats) => {
+                    if (err || !stats.isFile()) {
+                        reject(`JAR/WAR não encontrado: ${jarRealPath}`)
+                    } else {
+                        resolve(true);
+                    }
+                });
+            });
+        }
     },
     ...defaultJvmPrompts
 ];
