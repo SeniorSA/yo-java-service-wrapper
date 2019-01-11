@@ -1,20 +1,20 @@
 {
   "name": "generator-senior-service-wrapper",
-  "version": "1.0.0-snapshot",
-  "description": "Gerador de aplicações base da Fábrica de Software da Senior Sistemas",
+  "version": "1.0.0",
+  "description": "Gerador Yeoman de configurações Java Service Wrapper (YAJSM) para projetos Java.",
   "main": "generators/app/index.js",
   "license": "Apache-2.0",
   "author": {
     "name": "Luiz Nazari",
     "email": "luiz.nazari@senior.com.br"
   },
-  "homepage": "https://github.com/luiznazari/generator-senior-service-wrapper",
+  "homepage": "https://github.com/SeniorSA/senior-service-wrapper-yeoman-generator",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luiznazari/generator-senior-service-wrapper.git"
+    "url": "git+https://github.com/SeniorSA/senior-service-wrapper-yeoman-generator.git"
   },
   "bugs": {
-    "url": "https://github.com/luiznazari/generator-senior-service-wrapper/issues"
+    "url": "https://github.com/SeniorSA/senior-service-wrapper-yeoman-generator/issues"
   },
   "keywords": [
     "senior",
