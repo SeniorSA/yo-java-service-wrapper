@@ -75,7 +75,12 @@ const Framework = Object.freeze({
 
 const Constants = Object.freeze({
 
-    APP_JAR_NAME: 'app.jar'
+    APP_JAR_NAME: 'app.jar',
+    CONSOLE_COLOR_GREY: '\u001B[90m',
+    CONSOLE_COLOR_RESET: '\u001B[39m',
+    TITLE: 'Gerador de Wrapper (YAJSW) Senior-FSW',
+    FOLDER_WRAPPER: 'service-wrapper',
+    FOLDER_WEBROOT: 'webroot'
 
 });
 

@@ -17,11 +17,6 @@ require.extensions['.njk'] = (module, filename) => {
     module.exports = fs.readFileSync(filename, 'utf8');
 };
 
-const FOLDER_WRAPPER = 'service-wrapper';
-const SENIOR_FSW_WRAPPER_GENERATOR = 'Gerador de Wrapper (YAJSW) Senior-FSW';
-const CONSOLE_COLOR_GREY = '\u001B[90m';
-const CONSOLE_COLOR_RESET = '\u001B[39m';
-
 module.exports = class extends BaseGenerator {
 
     get initializing() {
@@ -82,12 +77,12 @@ module.exports = class extends BaseGenerator {
         const done = this.async();
         new Promise((resolve, reject) => {
 
-            this.log(chalk.grey(`Removendo conteúdo do diretório ${FOLDER_WRAPPER}...`));
-            rimraf(FOLDER_WRAPPER, error => {
+            this.log(chalk.grey(`Removendo conteúdo do diretório ${Constants.FOLDER_WRAPPER}...`));
+            rimraf(Constants.FOLDER_WRAPPER, error => {
                 if (error) {
-                    reject(`Não foi possível remover o diretório ${fs.realpathSync(FOLDER_WRAPPER)}. Por favor, tente remover manualmente.\nCausa: ${error}`);
+                    reject(`Não foi possível remover o diretório ${fs.realpathSync(Constants.FOLDER_WRAPPER)}. Por favor, tente remover manualmente.\nCausa: ${error}`);
                 } else {
-                    const projectWrapperDir = `${this.destinationRoot()}/${FOLDER_WRAPPER}`;
+                    const projectWrapperDir = `${this.destinationRoot()}/${Constants.FOLDER_WRAPPER}`;
                     const generatorWrapperDir = `${this.sourceRoot()}/yajsw`;
 
                     this.log(chalk.grey('Copiando os arquivos do wrapper...'));
@@ -98,39 +93,45 @@ module.exports = class extends BaseGenerator {
         }).then(() => {
             this.log(chalk.grey('Gerando configurações...'));
             const wrapperConfig = createWrapperConfig(this.frameworkConfig, this.appProps);
-            fs.writeFileSync(`${FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfig.fileContent);
+            fs.writeFileSync(`${Constants.FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfig.fileContent);
 
             if (wrapperConfig.jarPath) {
                 this.log(chalk.grey('Copiando jar...'));
-                fs.copyFileSync(wrapperConfig.jarPath, `${FOLDER_WRAPPER}/lib/${Constants.APP_JAR_NAME}`);
+                fs.copyFileSync(wrapperConfig.jarPath, `${Constants.FOLDER_WRAPPER}/lib/${Constants.APP_JAR_NAME}`);
             }
 
-            this._installService();
+            this.frameworkConfig.install(wrapperConfig, this.appProps)
+                .then(() => {
+                    this._installService();
+                    this._printSuccessMessage();
+                    done();
+                }).catch(this._errorHandler('Falha ao instalar configurações específicas do Framework.'));
 
-            this._printSuccessMessage();
-            done();
-
-        }).catch(error => {
-            this.error(error);
-            throw new Error('Falha ao copiar arquivos do wrapper.');
-        });
+        }).catch(this._errorHandler('Falha ao copiar arquivos do wrapper.'));
     }
 
     _installService() {
         if (this.appProps.installService) {
             this.log(chalk.grey('Instalando o serviço...'));
-            console.log(CONSOLE_COLOR_GREY);
+            console.log(Constants.CONSOLE_COLOR_GREY);
             if (/win/.test(os.platform())) {
-                childProccess.execSync(`${FOLDER_WRAPPER}\\bat\\installService.bat`);
+                childProccess.execSync(`${Constants.FOLDER_WRAPPER}\\bat\\installService.bat`);
             } else {
                 childProccess.execSync('./bin/installService.sh');
             }
-            console.log(CONSOLE_COLOR_RESET);
+            console.log(Constants.CONSOLE_COLOR_RESET);
+        }
+    }
+
+    _errorHandler(msg) {
+        return error => {
+            this.error(error);
+            throw new Error(msg, error);
         }
     }
 
     end() {
-        this.log(`Fim do ${SENIOR_FSW_WRAPPER_GENERATOR}.`);
+        this.log(`Fim do ${Constants.TITLE}.`);
     }
 
     _readConfigurationFromProject() {
@@ -175,13 +176,13 @@ module.exports = class extends BaseGenerator {
         }
 
         this.log(chalk.green(' __________________________________________________________________________________________________________\n'));
-        this.log(chalk.white(`  Bem-vindo ao ${SENIOR_FSW_WRAPPER_GENERATOR} ${chalk.yellow(`v${packagejs.version}`)}!`));
+        this.log(chalk.white(`  Bem-vindo ao ${Constants.TITLE} ${chalk.yellow(`v${packagejs.version}`)}!`));
         this.log(chalk.white(`  Documentação para configuração do wrapper em ${chalk.yellow('https://github.com/SeniorSA/yo-java-service-wrapper/')}`));
         this.log(chalk.green(' __________________________________________________________________________________________________________\n'));
 
-        const moduleWorkingDir = chalk.yellow(`${process.cwd().replace(/\\/g, '/')}/${FOLDER_WRAPPER}`);
+        const moduleWorkingDir = chalk.yellow(`${process.cwd().replace(/\\/g, '/')}/${Constants.FOLDER_WRAPPER}`);
         this.log(chalk.white(`Os arquivos serão gerados em: ${moduleWorkingDir}`));
-        this.log(chalk.white(`⚠ ALERTA ⚠  A pasta ${chalk.yellow(`${FOLDER_WRAPPER}`)} e todos seus arquivos serão removidos!\n`));
+        this.log(chalk.white(`⚠ ALERTA ⚠  A pasta ${chalk.yellow(`${Constants.FOLDER_WRAPPER}`)} e todos seus arquivos serão removidos!\n`));
     }
 
     _printSuccessMessage() {

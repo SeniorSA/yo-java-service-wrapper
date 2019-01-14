@@ -29,14 +29,18 @@ module.exports = class FrameworkConfig {
         return text.replace(REGEX_SPECIAL_CHARACTERS, specialCharacter => escapeUnicode(specialCharacter));
     }
 
-    applyPromptsDefaultValues(config) {
-        for (const currentCfg in config) {
+    applyPromptsDefaultValues(wrapperConfig) {
+        for (const currentCfg in wrapperConfig) {
             const cfgProp = this.prompts.find(prompt => prompt.name === currentCfg);
 
-            if (cfgProp && config[currentCfg]) {
-                cfgProp.default = config[currentCfg];
+            if (cfgProp && wrapperConfig[currentCfg]) {
+                cfgProp.default = wrapperConfig[currentCfg];
             }
         }
+    }
+
+    install(wrapperConfig, answers) {
+        return Promise.resolve();
     }
 
 }

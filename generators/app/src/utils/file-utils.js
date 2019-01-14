@@ -4,10 +4,19 @@ const path = require('path')
 const dirsToIgnore = ['service-wrapper', 'node_modules', '.mvn', '.idea', '.git'];
 const dirsToIgnoreRegex = new RegExp(`(?=${dirsToIgnore.map(dir => `^${dir}$`).join('|')})`);
 
+function discoverRelativeFilesByExtension(relativeSrc, extensions) {
+    const realPath = relativeSrc.startsWith('/') ? relativeSrc : path.resolve(relativeSrc);
+    return discoverFilesByExtension(realPath, extensions);
+}
+
 function discoverFilesByExtension(src, extensions) {
     const extensionsRegex = compileExtensionsRegex(extensions);
-    const realPath = src.startsWith('/') ? src : path.resolve(src);
-    return discoverFilesByRegex(realPath, extensionsRegex);
+
+    if (fs.existsSync(src)) {
+        return discoverFilesByRegex(src, extensionsRegex);
+    } else {
+        return [];
+    }
 }
 
 function discoverFilesByRegex(src, regex) {
@@ -29,6 +38,10 @@ function discoverFilesByRegex(src, regex) {
 }
 
 function compileExtensionsRegex(extensions) {
+    if (!Array.isArray(extensions)) {
+        extensions = [extensions];
+    }
+
     const extensionsExp = extensions
         .map(ext => {
             if (!ext.startsWith('.')) {
@@ -41,5 +54,6 @@ function compileExtensionsRegex(extensions) {
 }
 
 module.exports = {
-    discoverFilesByExtension
+    discoverFilesByExtension,
+    discoverRelativeFilesByExtension
 };

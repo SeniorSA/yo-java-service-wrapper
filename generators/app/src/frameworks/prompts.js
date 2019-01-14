@@ -1,11 +1,23 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const { ServiceStartType } = require('../models');
-const discoverFilesByExtension = require('../utils/file-utils').discoverFilesByExtension;
+const discoverRelativeFilesByExtension = require('../utils/file-utils').discoverRelativeFilesByExtension;
 
 const PREFIX_ALTERNATIVE_QUESTION = chalk.green('  \\- ');
 
 const Validators = {
+
+    directoryExists: input => {
+        return new Promise((resolve, reject) => {
+            fs.stat(input, (err, stats) => {
+                if (err || !stats.isDirectory()) {
+                    reject(`Diretório não encontrado: ${input}`)
+                } else {
+                    resolve(true);
+                }
+            });
+        });
+    },
 
     fileExists: input => {
         return new Promise((resolve, reject) => {
@@ -28,9 +40,12 @@ const Choices = {
     buildForRelativeFiles(fileExtensions) {
         return () => {
             const rootPath = fs.realpathSync('');
-            return discoverFilesByExtension('', fileExtensions)
+            return discoverRelativeFilesByExtension('', fileExtensions)
                 .map(filePath => {
-                    return { name: filePath.replace(rootPath, ''), value: filePath }
+                    return {
+                        name: filePath.replace(rootPath, ''),
+                        value: filePath
+                    }
                 }).concat({
                     name: 'Outro: informar manualmente',
                     value: Choices.ANSWER_MANUAL
