@@ -176,7 +176,7 @@ module.exports = class extends BaseGenerator {
 
         this.log(chalk.green(' __________________________________________________________________________________________________________\n'));
         this.log(chalk.white(`  Bem-vindo ao ${SENIOR_FSW_WRAPPER_GENERATOR} ${chalk.yellow(`v${packagejs.version}`)}!`));
-        this.log(chalk.white(`  Documentação para configuração do wrapper em ${chalk.yellow('https://url.com.br')}`));
+        this.log(chalk.white(`  Documentação para configuração do wrapper em ${chalk.yellow('https://github.com/SeniorSA/yo-java-service-wrapper/')}`));
         this.log(chalk.green(' __________________________________________________________________________________________________________\n'));
 
         const moduleWorkingDir = chalk.yellow(`${process.cwd().replace(/\\/g, '/')}/${FOLDER_WRAPPER}`);

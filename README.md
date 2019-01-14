@@ -1,57 +1,80 @@
-# generator-jhipster-senior-fsw
+# java-service-wrapper
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> JHipster module, Gerador de aplicações base da Fábrica de Software da Senior Sistemas
+> JHipster module, Gerador de Java Service Wrapper base da Fábrica de Software da [Senior Sistemas][senior].
 
 # Introduction
 
-This is a [JHipster](http://jhipster.github.io/) module, that is meant to be used in a JHipster application.
+This is a [Yeoman][Yeoman] generator and a [JHipster][jhipster] module, that is meant to be used in Java projects to create a Java Service Wrapper and install the application as a Service. `java-service-wrapper` does **not** require the project to be a Jhipster project.
+
 
 # Prerequisites
 
-As this is a [JHipster](http://jhipster.github.io/) module, we expect you have JHipster and its related tools already installed:
+As this is a [JHipster][jhipster] module, we expect you have JHipster and its related tools already installed:
 
-- [Installing JHipster](https://jhipster.github.io/installation.html)
+- [Installing JHipster][jhipster-install]
+
 
 # Installation
-
-## With Yarn
-
-To install this module:
-
-```bash
-yarn global add generator-jhipster-senior-fsw
-```
-
-To update this module:
-
-```bash
-yarn global upgrade generator-jhipster-senior-fsw
-```
 
 ## With NPM
 
 To install this module:
 
 ```bash
-npm install -g generator-jhipster-senior-fsw
+npm install -g java-service-wrapper
 ```
 
 To update this module:
 
 ```bash
-npm update -g generator-jhipster-senior-fsw
+npm update -g java-service-wrapper
 ```
+
+## With Yarn
+
+To install this module:
+
+```bash
+yarn global add java-service-wrapper
+```
+
+To update this module:
+
+```bash
+yarn global upgrade java-service-wrapper
+```
+
+## Local
+
+Clone this repository or download this project and then, from `java-service-wrapper` root folder, run:
+```bash
+npm install
+```
+```bash
+npm link
+```
+
 
 # Usage
 
+From project root directory, run:
+```bash
+yo java-service-wrapper
+```
+
+
 # License
 
-Apache-2.0 © [Luiz Nazari]()
+Apache-2.0 © [Luiz Nazari][github-profile]
 
-
-[npm-image]: https://img.shields.io/npm/v/generator-jhipster-senior-fsw.svg
-[npm-url]: https://npmjs.org/package/generator-jhipster-senior-fsw
-[travis-image]: https://travis-ci.org/luiznazari/generator-jhipster-senior-fsw.svg?branch=master
-[travis-url]: https://travis-ci.org/luiznazari/generator-jhipster-senior-fsw
-[daviddm-image]: https://david-dm.org/luiznazari/generator-jhipster-senior-fsw.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/luiznazari/generator-jhipster-senior-fsw
+[senior]: https://www.senior.com.br/
+[jhipster]: http://jhipster.github.io/
+[jhipster-install]: https://jhipster.github.io/installation.html
+[yeoman]: https://yeoman.io/
+[npm-image]: https://img.shields.io/npm/v/java-service-wrapper.svg
+[npm-url]: https://npmjs.org/package/java-service-wrapper
+[travis-image]: https://travis-ci.org/luiznazari/java-service-wrapper.svg?branch=master
+[travis-url]: https://travis-ci.org/luiznazari/java-service-wrapper
+[daviddm-image]: https://david-dm.org/luiznazari/java-service-wrapper.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/luiznazari/java-service-wrapper
+[github-profile]: https://github.com/luiznazari
