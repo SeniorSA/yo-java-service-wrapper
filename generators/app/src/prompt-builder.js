@@ -4,17 +4,18 @@ module.exports = class PromptBuilder {
 
     constructor(frameworkConfig) {
         this.frameworkConfig = frameworkConfig;
+        this.wrapperConfigDefaultValues = [];
     }
 
     withDefaultValues(wrapperConfigDefaultValues) {
-        this.wrapperConfigDefaultValues = wrapperConfigDefaultValues;
+        this.wrapperConfigDefaultValues.push(wrapperConfigDefaultValues);
         return this;
     }
 
     build() {
-        if (this.wrapperConfigDefaultValues) {
-            this.frameworkConfig.applyPromptsDefaultValues(this.wrapperConfigDefaultValues);
-        }
+        this.wrapperConfigDefaultValues.forEach(defaults => {
+            this.frameworkConfig.applyPromptsDefaultValues(defaults);
+        });
 
         return this.frameworkConfig.prompts
             .map(frameworkPrompt => this._buildCliPromptFor(frameworkPrompt))

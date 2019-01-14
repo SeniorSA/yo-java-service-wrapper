@@ -1,11 +1,46 @@
 const fs = require('fs');
 const chalk = require('chalk');
-const { ServiceStartType } = require('./model');
-const discoverFilesByExtension = require('./file-utils').discoverFilesByExtension;
+const { ServiceStartType } = require('../models');
+const discoverFilesByExtension = require('../utils/file-utils').discoverFilesByExtension;
 
 const PREFIX_ALTERNATIVE_QUESTION = chalk.green('  \\- ');
 
-const defaultServicePrompts = [
+const Validators = {
+
+    fileExists: input => {
+        return new Promise((resolve, reject) => {
+            fs.stat(input, (err, stats) => {
+                if (err || !stats.isFile()) {
+                    reject(`Arquivo não encontrado: ${input}`)
+                } else {
+                    resolve(true);
+                }
+            });
+        });
+    }
+
+}
+
+const Choices = {
+
+    ANSWER_MANUAL: '_manual_',
+
+    buildForRelativeFiles(fileExtensions) {
+        return () => {
+            const rootPath = fs.realpathSync('');
+            return discoverFilesByExtension('', fileExtensions)
+                .map(filePath => {
+                    return { name: filePath.replace(rootPath, ''), value: filePath }
+                }).concat({
+                    name: 'Outro: informar manualmente',
+                    value: Choices.ANSWER_MANUAL
+                });
+        }
+    }
+
+}
+
+const SERVICE_PROMPTS = [
     {
         name: 'installService',
         type: 'confirm',
@@ -43,7 +78,7 @@ const defaultServicePrompts = [
         name: 'serviceStartType',
         required: true,
         default: ServiceStartType.AUTO_START,
-        message: 'Qual o tipo de inicialização do serviço?',
+        message: 'Qual é o tipo de inicialização do serviço?',
         choices: [{
             name: 'Automático',
             value: ServiceStartType.AUTO_START
@@ -57,17 +92,21 @@ const defaultServicePrompts = [
     }, {
         name: 'workingDir',
         required: false,
-        message: 'Qual o diretório de trabalho do aplicativo? (Caminho relativo ao root do projeto)',
+        message: 'Qual é o diretório de trabalho do aplicativo? (Caminho relativo ao root do projeto)',
         default: '${wrapper_home}'
     }
 ];
 
-const defaultJvmPrompts = [
+const JVM_PROMPTS = [
     {
+        name: 'appMainClass',
+        required: false,
+        message: 'Qual é a classe principal da aplicação? (Deixe em branco para utilizar a classe principal do jar)',
+    }, {
         name: 'wrapperMainClass',
         required: true,
         default: 'org.rzo.yajsw.app.WrapperJVMMain',
-        message: 'Qual a classe executada quando o wrapper inicia a aplicação?',
+        message: 'Qual é a classe executada quando o wrapper inicia a aplicação?',
         choices: [{
             name: 'YAJSW WrapperMain',
             value: 'org.rzo.yajsw.app.WrapperJVMMain'
@@ -76,10 +115,6 @@ const defaultJvmPrompts = [
             value: 'org.tanukisoftware.wrapper.WrapperJarApp'
         }]
     }, {
-        name: 'appMainClass',
-        required: false,
-        message: 'Qual a classe principal da aplicação? (Deixe em branco para utilizar a classe principal do jar)',
-    }, {
         name: 'jvmEncoding',
         required: false,
         message: 'Qual é o encoding da JVM?',
@@ -87,45 +122,13 @@ const defaultJvmPrompts = [
     },
 ];
 
-const promptsSpringBoot = [
-    ...defaultServicePrompts,
-    {
-        name: 'jarPath',
-        required: true,
-        message: 'Qual o JAR/WAR da aplicação (launcher do Spring Boot)?',
-        paginated: true,
-        choices: () => {
-            const rootPath = fs.realpathSync('');
-            const pathChoices = discoverFilesByExtension('', ['.jar', '.war'])
-                .map(filePath => {
-                    return { name: filePath.replace(rootPath, ''), value: filePath }
-                });
-            pathChoices.push({
-                name: 'Outro: informar manualmente',
-                value: 'manual'
-            });
-            return pathChoices;
-        }
-    }, {
-        name: 'jarPathManual',
-        required: true,
-        message: 'Informe o caminho real do JAR/WAR (relativo ao sistema):',
-        prefix: PREFIX_ALTERNATIVE_QUESTION,
-        when: answers => answers.jarPath === 'manual',
-        validate: input => new Promise((resolve, reject) => {
-            fs.stat(input, (err, stats) => {
-                if (err || !stats.isFile()) {
-                    reject(`JAR/WAR não encontrado: ${input}`)
-                } else {
-                    resolve(true);
-                }
-            });
-        })
-    },
-    ...defaultJvmPrompts
-];
-
 module.exports = {
-    promptsSpringBoot
+
+    Choices,
+    Validators,
+    JVM_PROMPTS,
+    SERVICE_PROMPTS,
+    PREFIX_ALTERNATIVE_QUESTION
+
 };
 

@@ -1,14 +1,9 @@
 const nunjucks = require('nunjucks');
-const { WrapperConfig } = require('./model');
+const { WrapperConfig } = require('./models');
 
 function createWrapperConfig(frameworkConfig, answers) {
     const config = createConfigFromAnswers(answers);
-
     frameworkConfig.configure(config, answers);
-
-    if (config.jvmEncoding) {
-        config.jvmArguments.push(`-Dfile.encoding=${config.jvmEncoding}`);
-    }
 
     validateConfig(config, frameworkConfig.prompts);
 

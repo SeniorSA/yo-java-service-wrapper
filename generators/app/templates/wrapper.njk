@@ -42,7 +42,8 @@ wrapper.daemon.run_level_dir = ${if (new File('\/etc\/rc0.d').exists()) return '
 # ================================================================= #
 # Java e JVM
 # ================================================================= #
-{% if config.workingDir %}
+
+{% if config.workingDir -%}
 # Diretório de trabalho da aplicação Java. Ex.: ${senior_app}\\app, onde ${senior_app} é uma variável de ambiente do sistema oparacional apontando para a pasta do aplicativo.
 wrapper.working.dir = {{ config.workingDir }}
 {% endif %}
@@ -52,32 +53,32 @@ wrapper.working.dir = {{ config.workingDir }}
 # Padrão: org.rzo.yajsw.app.WrapperJVMMain
 # Alternativa: org.tanukisoftware.wrapper.WrapperJarApp
 wrapper.java.mainclass = {{ config.wrapperMainClass }}
-{% if config.appMainClass %}
+
+{% if config.appMainClass -%}
 # Classe principal da aplicação. Não é requerido quando utilizado com org.tanukisoftware.wrapper.WrapperJarApp.
 wrapper.java.app.mainclass = {{ config.appMainClass }}
 {% endif %}
-
 # Diretório temporário.
 wrapper.tmp.path = ${jna_tmpdir}
 
 # Parâmetros da JVM.
-{% for additional in config.jvmArguments %}
-wrapper.java.additional.{{ loop.index }} = {{ additional }}
+{% for additional in config.jvmArguments -%}
+    wrapper.java.additional.{{ loop.index }} = {{ additional | safe }}
 {% endfor %}
-
 # Configurações de chamada da aplicação
 # -------------------------------------
-{% if config.javaCommand %}
+
+{% if config.javaCommand -%}
 # O comando a ser utilizado quando estiver iniciando a JVM.
 wrapper.java.command = {{ config.javaCommand }}
 wrapper.java.command.minVersion = {{ config.javaMinVersion }}
 {% endif %}
 wrapper.java.app.jar = {{ config.workingDir }}/lib/{{ config.jar }}
-{% for param in config.java.jarParameters %}
-wrapper.app.parameter.{{ loop.index }} = {{ param }}
+{% for param in config.jarParameters -%}
+    wrapper.app.parameter.{{ loop.index }} = {{ param | safe }}
 {% endfor %}
-{% for classpath in config.java.classpaths %}
-wrapper.java.classpath.{{ loop.index }} = {{ classpath }}
+{% for classpath in config.classpaths -%}
+    wrapper.java.classpath.{{ loop.index }} = {{ classpath | safe }}
 {% endfor %}
 # Wrapper JVM Checks
 # ------------------

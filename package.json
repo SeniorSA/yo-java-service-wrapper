@@ -1,5 +1,5 @@
 {
-  "name": "generator-senior-service-wrapper",
+  "name": "generator-java-service-wrapper",
   "version": "1.0.0",
   "description": "Gerador Yeoman de configurações Java Service Wrapper (YAJSM) para projetos Java.",
   "main": "generators/app/index.js",
@@ -8,22 +8,21 @@
     "name": "Luiz Nazari",
     "email": "luiz.nazari@senior.com.br"
   },
-  "homepage": "https://github.com/SeniorSA/senior-service-wrapper-yeoman-generator",
+  "homepage": "https://github.com/SeniorSA/yo-java-service-wrapper",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SeniorSA/senior-service-wrapper-yeoman-generator.git"
+    "url": "git+https://github.com/SeniorSA/yo-java-service-wrapper.git"
   },
   "bugs": {
-    "url": "https://github.com/SeniorSA/senior-service-wrapper-yeoman-generator/issues"
+    "url": "https://github.com/SeniorSA/yo-java-service-wrapper/issues"
   },
   "keywords": [
     "senior",
     "yajsw",
-    "wrapper",
+    "java",
     "service",
-    "yeoman-generator",
-    "jhipster-module",
-    "jhipster-5"
+    "wrapper",
+    "yeoman-generator"
   ],
   "files": [
     "generators"

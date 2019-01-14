@@ -1,6 +1,6 @@
 const fs = require('fs');
 const xml2js = require('xml2js');
-const { WrapperConfig } = require('./model');
+const { WrapperConfig } = require('./models');
 
 class DefaultConfigReader {
 

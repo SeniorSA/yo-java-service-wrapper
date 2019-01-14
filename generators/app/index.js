@@ -4,9 +4,9 @@ const ncp = require('ncp').ncp;
 const chalk = require('chalk');
 const rimraf = require('rimraf');
 const childProccess = require('child_process');
-const { Framework, Constants } = require('./src/model');
+const { Framework, Constants } = require('./src/models');
 const packagejs = require('../../package.json');
-const getConfigFor = require('./src/framework-config');
+const Frameworks = require('./src/frameworks/frameworks');
 const PromptBuilder = require('./src/prompt-builder');
 const createWrapperConfig = require('./src/config-wrapper-generator');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
@@ -57,11 +57,12 @@ module.exports = class extends BaseGenerator {
 
         const done = this.async();
         this.prompt(promptsFramework).then(setupProps => {
-            this.frameworkConfig = getConfigFor(setupProps.javaFramework);
+            this.frameworkConfig = Frameworks.getConfig(setupProps.javaFramework);
 
             this._readConfigurationFromProject().then(projectDefaults => {
                 const prompts = new PromptBuilder(this.frameworkConfig)
                     .withDefaultValues(projectDefaults)
+                    .withDefaultValues(this.frameworkConfig.defaults())
                     .build();
 
                 this.prompt(prompts).then(props => {
@@ -168,7 +169,7 @@ module.exports = class extends BaseGenerator {
         this.log(chalk.white.bold('\n                                             https://senior.com.br\n'));
 
         if (process.cwd() === this.getUserHome()) {
-            this.log(chalk.red.bold('\n️⚠️ ALERTA ⚠️  Você está em seu diretório HOME!'));
+            this.log(chalk.red.bold('\n⚠ ALERTA ⚠  Você está em seu diretório HOME!'));
             this.log(chalk.red('Isso pode causar problemas, você sempre deve criar um novo diretório e executar o jhipster a partir deste.'));
             this.log(chalk.white(`Veja a seção de solução de problemas em ${chalk.yellow('https://www.jhipster.tech/installation/')}`));
         }
@@ -180,7 +181,7 @@ module.exports = class extends BaseGenerator {
 
         const moduleWorkingDir = chalk.yellow(`${process.cwd().replace(/\\/g, '/')}/${FOLDER_WRAPPER}`);
         this.log(chalk.white(`Os arquivos serão gerados em: ${moduleWorkingDir}`));
-        this.log(chalk.white(`⚠️ ALERTA ⚠️  A pasta ${chalk.yellow(`${FOLDER_WRAPPER}`)} e todos seus arquivos serão removidos!\n`));
+        this.log(chalk.white(`⚠ ALERTA ⚠  A pasta ${chalk.yellow(`${FOLDER_WRAPPER}`)} e todos seus arquivos serão removidos!\n`));
     }
 
     _printSuccessMessage() {
