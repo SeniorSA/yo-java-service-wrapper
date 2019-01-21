@@ -68,8 +68,8 @@ const prompts = [
             return true;
         }
     }, {
-        type: 'confirm',
         name: 'enableG5DnsResolver',
+        type: 'confirm',
         required: true,
         message: 'O serviço irá executar em ambiente do cliente? (Quando não, desabilita o resolvedor de DNS para autenticação no G5).',
         default: true
