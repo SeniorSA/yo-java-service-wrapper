@@ -5,8 +5,8 @@
   "main": "generators/app/index.js",
   "license": "Apache-2.0",
   "author": {
-    "name": "Luiz Nazari",
-    "email": "luiz.nazari@senior.com.br"
+    "name": "Luiz Felipe Nazari",
+    "email": "luiz.nazari.42@gmail.com"
   },
   "homepage": "https://github.com/SeniorSA/yo-java-service-wrapper",
   "repository": {

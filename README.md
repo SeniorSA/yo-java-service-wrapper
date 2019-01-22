@@ -13,7 +13,6 @@ As this is a [JHipster][jhipster] module, we expect you have JHipster and its re
 
 - [Installing JHipster][jhipster-install]
 
-
 # Installation
 
 ## With NPM
@@ -21,27 +20,13 @@ As this is a [JHipster][jhipster] module, we expect you have JHipster and its re
 To install this module:
 
 ```bash
-npm install -g java-service-wrapper
+npm install -g generator-java-service-wrapper
 ```
 
 To update this module:
 
 ```bash
-npm update -g java-service-wrapper
-```
-
-## With Yarn
-
-To install this module:
-
-```bash
-yarn global add java-service-wrapper
-```
-
-To update this module:
-
-```bash
-yarn global upgrade java-service-wrapper
+npm update -g generator-java-service-wrapper
 ```
 
 ## Local
@@ -54,14 +39,12 @@ npm install
 npm link
 ```
 
-
 # Usage
 
 From project root directory, run:
 ```bash
 yo java-service-wrapper
 ```
-
 
 # License
 
