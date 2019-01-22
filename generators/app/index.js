@@ -76,38 +76,42 @@ module.exports = class extends BaseGenerator {
     install() {
         const done = this.async();
         new Promise((resolve, reject) => {
-
             this.log(chalk.grey(`Removendo conteúdo do diretório ${Constants.FOLDER_WRAPPER}...`));
             rimraf(Constants.FOLDER_WRAPPER, error => {
                 if (error) {
                     reject(`Não foi possível remover o diretório ${fs.realpathSync(Constants.FOLDER_WRAPPER)}. Por favor, tente remover manualmente.\nCausa: ${error}`);
                 } else {
-                    const projectWrapperDir = `${this.destinationRoot()}/${Constants.FOLDER_WRAPPER}`;
-                    const generatorWrapperDir = `${this.sourceRoot()}/yajsw`;
+                    const projectWrapperDir = this.destinationPath(Constants.FOLDER_WRAPPER);
+                    const generatorWrapperDir = this.templatePath('yajsw');
 
                     this.log(chalk.grey('Copiando os arquivos do wrapper...'));
                     ncp(generatorWrapperDir, projectWrapperDir, error => error ? reject(error) : resolve());
                 }
             });
+        })
+            .then(() => this._createGitIgnore())
+            .then(() => {
+                this.log(chalk.grey('Gerando configurações...'));
+                const wrapperConfig = createWrapperConfig(this.frameworkConfig, this.appProps);
+                fs.writeFileSync(`${Constants.FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfig.fileContent);
 
-        }).then(() => {
-            this.log(chalk.grey('Gerando configurações...'));
-            const wrapperConfig = createWrapperConfig(this.frameworkConfig, this.appProps);
-            fs.writeFileSync(`${Constants.FOLDER_WRAPPER}/conf/wrapper.conf`, wrapperConfig.fileContent);
+                if (wrapperConfig.jarPath) {
+                    this.log(chalk.grey('Copiando jar...'));
+                    fs.copyFileSync(wrapperConfig.jarPath, `${Constants.FOLDER_WRAPPER}/lib/${Constants.APP_JAR_NAME}`);
+                }
 
-            if (wrapperConfig.jarPath) {
-                this.log(chalk.grey('Copiando jar...'));
-                fs.copyFileSync(wrapperConfig.jarPath, `${Constants.FOLDER_WRAPPER}/lib/${Constants.APP_JAR_NAME}`);
-            }
+                this.frameworkConfig.install(wrapperConfig, this.appProps)
+                    .then(() => {
+                        this._installService();
+                        this._printSuccessMessage();
+                        done();
+                    }).catch(this._errorHandler('Falha ao instalar configurações específicas do Framework.'));
 
-            this.frameworkConfig.install(wrapperConfig, this.appProps)
-                .then(() => {
-                    this._installService();
-                    this._printSuccessMessage();
-                    done();
-                }).catch(this._errorHandler('Falha ao instalar configurações específicas do Framework.'));
+            }).catch(this._errorHandler('Falha ao copiar arquivos do wrapper.'));
+    }
 
-        }).catch(this._errorHandler('Falha ao copiar arquivos do wrapper.'));
+    _createGitIgnore() {
+        fs.writeFileSync(`${Constants.FOLDER_WRAPPER}/.gitignore`, '*');
     }
 
     _installService() {
