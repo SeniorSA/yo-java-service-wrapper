@@ -1,6 +1,6 @@
 {
   "name": "generator-java-service-wrapper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Gerador Yeoman de configurações Java Service Wrapper (YAJSM) para projetos Java.",
   "main": "generators/app/index.js",
   "license": "Apache-2.0",
