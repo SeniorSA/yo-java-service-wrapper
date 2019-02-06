@@ -79,6 +79,10 @@ const prompts = [
 
 module.exports = class JspareConfig extends FrameworkConfig {
 
+    static get CONFIG_FILE() {
+        return 'jspare-conf.json';
+    }
+
     constructor() {
         super(prompts);
     }
@@ -96,18 +100,28 @@ module.exports = class JspareConfig extends FrameworkConfig {
             'run',
             answers.verticleClassManual || answers.verticleClass,
             '-conf',
-            `"${answers.verticleConfManual || answers.verticleConf}"`,
+            `"${Constants.FOLDER_CONFIGURATIONS}/${JspareConfig.CONFIG_FILE}"`,
             `-Dvertx.disableDnsResolver=${!answers.enableG5DnsResolver}`
         ]);
     }
 
     install(wrapperConfig, answers) {
-        return new Promise((resolve, reject) => {
+        const promiseWebRoot = new Promise((resolve, reject) => {
             if (answers.webDistFolder) {
                 const projectWebRootDir = `${Constants.FOLDER_WRAPPER}/${Constants.FOLDER_WEBROOT}`;
                 ncp(answers.webDistFolder, projectWebRootDir, error => error ? reject(error) : resolve());
+            } else {
+                resolve();
             }
         });
+
+        const promiseConfig = new Promise((resolve, reject) => {
+            const jspareConfigFileDir = answers.verticleConfManual || answers.verticleConf;
+            const projectJspareConfigFileDir = `${Constants.FOLDER_WRAPPER}/${Constants.FOLDER_CONFIGURATIONS}/${JspareConfig.CONFIG_FILE}`;
+            ncp(jspareConfigFileDir, projectJspareConfigFileDir, error => error ? reject(error) : resolve());
+        });
+
+        return Promise.all([promiseWebRoot, promiseConfig]);
     }
 
 }

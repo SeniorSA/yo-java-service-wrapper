@@ -80,7 +80,8 @@ const Constants = Object.freeze({
     CONSOLE_COLOR_RESET: '\u001B[39m',
     TITLE: 'Gerador de Wrapper (YAJSW) Senior-FSW',
     FOLDER_WRAPPER: 'service-wrapper',
-    FOLDER_WEBROOT: 'webroot'
+    FOLDER_WEBROOT: 'webroot',
+    FOLDER_CONFIGURATIONS: 'conf'
 
 });
 
