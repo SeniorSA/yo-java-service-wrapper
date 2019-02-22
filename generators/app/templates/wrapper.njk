@@ -71,7 +71,12 @@ wrapper.tmp.path = ${jna_tmpdir}
     wrapper.java.additional.{{ loop.index }} = {{ additional | safe }}
 {% else -%}
     # wrapper.java.additional.1 =
-{% endfor %}
+{% endfor -%}
+#wrapper.java.additional.n = -Dhttp.proxyHost=dominio.com
+#wrapper.java.additional.n = -Dhttp.proxyPort=8080
+#wrapper.java.additional.n = -Djava.net.useSystemProxies=true
+#wrapper.java.additional.n = -Dhttp.nonProxyHosts="localhost|127.0.0.1"
+
 # Configurações de chamada da aplicação
 # -------------------------------------
 
