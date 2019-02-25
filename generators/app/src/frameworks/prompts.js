@@ -104,11 +104,6 @@ const SERVICE_PROMPTS = [
             name: 'Manual',
             value: ServiceStartType.DEMAND_START
         }]
-    }, {
-        name: 'workingDir',
-        required: false,
-        message: 'Qual é o diretório de trabalho do aplicativo? (Caminho relativo ao root do projeto)',
-        default: '${wrapper_home}'
     }
 ];
 

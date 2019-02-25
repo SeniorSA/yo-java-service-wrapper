@@ -88,7 +88,7 @@ module.exports = class JspareConfig extends FrameworkConfig {
     }
 
     defaults() {
-        const defaults = new WrapperConfig();
+        const defaults = super.defaults();
         defaults.appMainClass = 'org.jspare.vertx.VertxJspareLauncher';
         return defaults;
     }

@@ -14,7 +14,7 @@ const prompts = [
         required: true,
         message: 'Informe o caminho real do JAR/WAR (relativo ao sistema):',
         prefix: PREFIX_ALTERNATIVE_QUESTION,
-        when: answers => answers.jarPath === 'manual',
+        when: answers => answers.jarPath === Choices.ANSWER_MANUAL,
         validate: Validators.fileExists
     },
     ...JVM_PROMPTS
