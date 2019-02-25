@@ -13,6 +13,7 @@ function createWrapperConfig(frameworkConfig, answers) {
 
 function createConfigFromAnswers(answers) {
     const config = new WrapperConfig();
+    config.workingDir = '';
 
     for (const answerName in answers) {
         if (typeof config[answerName] !== 'undefined') {

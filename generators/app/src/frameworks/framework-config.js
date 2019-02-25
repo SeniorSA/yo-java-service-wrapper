@@ -14,6 +14,7 @@ module.exports = class FrameworkConfig {
     }
 
     configure(wrapperConfig, answers) {
+        wrapperConfig.workingDir = '${wrapper_home}';
         wrapperConfig.serviceName = `senior-${wrapperConfig.serviceName}`;
         wrapperConfig.serviceDisplayName = this._escapeUnicode(`Senior - ${wrapperConfig.serviceDisplayName}`);
         wrapperConfig.serviceDescription = this._escapeUnicode(wrapperConfig.serviceDescription);

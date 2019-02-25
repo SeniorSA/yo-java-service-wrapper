@@ -93,6 +93,10 @@ class NodeConfigReader extends DefaultConfigReader {
 
 }
 
+class wrapperConfigReader extends DefaultConfigReader {
+
+}
+
 module.exports = {
     DefaultConfigReader,
     MavenConfigReader,
