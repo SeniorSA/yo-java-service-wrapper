@@ -7,7 +7,7 @@
 # ================================================================= #
 # Propriedades do Serviço
 # ================================================================= #
-# *ALERTA: NÃO modifique os valores das Propriedades do Serviço enquanto
+# ALERTA: NÃO modifique os valores das Propriedades do Serviço enquanto
 # a aplicação utilizando este arquivo de configuração já estiver instalada.
 # Alterações a essas propriedades não irão surtir efeito até o serviço ser
 # reinstalado. Por favor, desinstale o serviço existente ANTES de modificar
@@ -43,28 +43,25 @@ wrapper.daemon.run_level_dir = ${if (new File('\/etc\/rc0.d').exists()) return '
 # Java e JVM
 # ================================================================= #
 
-# Diretório de trabalho da aplicação Java. Ex.: ${senior_app}\\app, onde ${senior_app} é uma variável de ambiente do sistema oparacional apontando para a pasta do aplicativo.
-{% if config.workingDir -%}
-    wrapper.working.dir = {{ config.workingDir }}
+# Especificação do JDK/JRE a ser utilizado para executar a aplicação.
+# Caso não informado será utilizada a JDK/JRE padrão do sistema.
+{% if config.javaHome -%}
+    set.JAVA_HOME = {{ config.javaHome }}
+    wrapper.java = %JAVA_HOME%/bin/java.exe
+    wrapper.java.library.path.1 = %JAVA_HOME%/bin
+    wrapper.java.command = "%JAVA_HOME%/bin/java"
+    wrapper.java.command.64bit = true
 {% else -%}
-    # wrapper.working.dir =
+    # set.JAVA_HOME=${wrapper_home}/Java/jre1.8.0_201
+    # wrapper.java = %JAVA_HOME%/bin/java.exe
+    # wrapper.java.library.path.1 = %JAVA_HOME%/bin
+    # wrapper.java.command = "%JAVA_HOME%/bin/java"
+    # wrapper.java.command.64bit = true
 {% endif %}
-# Classe executada quando o wrapper inicia a aplicação. Essa classe precisa implementar
-# a interface WrapperListener ou garantr que a classe WrapperManager está inicializada.
-# Mais detalhes na seção de integração da documentação.
-# Padrão: org.rzo.yajsw.app.WrapperJVMMain
-# Alternativa: org.tanukisoftware.wrapper.WrapperJarApp
-wrapper.java.mainclass = {{ config.wrapperMainClass }}
 
-# Classe principal da aplicação. Não é requerido quando utilizado com org.tanukisoftware.wrapper.WrapperJarApp.
-{% if config.appMainClass -%}
-    wrapper.java.app.mainclass = {{ config.appMainClass }}
-{% else -%}
-    # wrapper.java.app.mainclass =
-{% endif -%}
-
-# Diretório temporário.
-wrapper.tmp.path = ${jna_tmpdir}
+# Configura as condições para a busca automática por JVM (Apenas Windows).
+# wrapper.java.command.minVersion=1.8
+# wrapper.java.command.maxVersion=1.8
 
 # Parâmetros da JVM.
 {% for additional in config.jvmArguments -%}
@@ -80,12 +77,6 @@ wrapper.tmp.path = ${jna_tmpdir}
 # Configurações de chamada da aplicação
 # -------------------------------------
 
-{% if config.javaCommand -%}
-# O comando a ser utilizado quando estiver iniciando a JVM.
-wrapper.java.command = {{ config.javaCommand }}
-wrapper.java.command.minVersion = {{ config.javaMinVersion }}
-{% endif -%}
-
 wrapper.java.app.jar = {{ config.workingDir }}/lib/{{ config.jar }}
 {% for param in config.jarParameters -%}
     wrapper.app.parameter.{{ loop.index }} = {{ param | safe }}
@@ -97,6 +88,34 @@ wrapper.java.app.jar = {{ config.workingDir }}/lib/{{ config.jar }}
 {% else -%}
     # wrapper.java.classpath.1 =
 {% endfor %}
+
+# Classe principal da aplicação. Não é requerido quando utilizado com org.tanukisoftware.wrapper.WrapperJarApp.
+{% if config.appMainClass -%}
+    wrapper.java.app.mainclass = {{ config.appMainClass }}
+{% else -%}
+    # wrapper.java.app.mainclass =
+{% endif -%}
+
+# Configurações de inicilização e ambiente do YAJSW
+# -------------------------------------------------
+
+# Diretório de trabalho da aplicação Java. Ex.: ${senior_app}\\app, onde ${senior_app} é uma variável de ambiente do sistema oparacional apontando para a pasta do aplicativo.
+{% if config.workingDir -%}
+    wrapper.working.dir = {{ config.workingDir }}
+{% else -%}
+    # wrapper.working.dir =
+{% endif %}
+
+# Classe executada quando o wrapper inicia a aplicação. Essa classe precisa implementar
+# a interface WrapperListener ou garantr que a classe WrapperManager está inicializada.
+# Mais detalhes na seção de integração da documentação.
+# Padrão: org.rzo.yajsw.app.WrapperJVMMain
+# Alternativa: org.tanukisoftware.wrapper.WrapperJarApp
+wrapper.java.mainclass = {{ config.wrapperMainClass }}
+
+# Diretório temporário.
+wrapper.tmp.path = ${jna_tmpdir}
+
 # Wrapper JVM Checks
 # ------------------
 
@@ -107,6 +126,51 @@ wrapper.java.monitor.deadlock.restart = true
 wrapper.filter.trigger.deadlock.tray = wrapper.java.monitor.deadlock: DEADLOCK IN THREADS:
 wrapper.filter.script.deadlock.tray = scripts/trayMessage.gv
 wrapper.filter.script.deadlock.tray.args = Deadlock Detected
+
+# ================================================================= #
+# Wrapper System Tray Properties
+# ================================================================= #
+
+# Habilita ícone na barra de tarefas (system tray)
+wrapper.tray = false
+
+# Porta TCP/IP. Caso nenhuma seja informada, uma porta será definida
+# usado descoberta multicast (se possível).
+# wrapper.tray.port = 15002
+
+# Arquivo ícone para utilizar. Caso habilitado e não especificado, será
+# utilizado o ícone de console.
+# wrapper.tray.icon=
+
+# ================================================================= #
+# LOG
+# ================================================================= #
+
+# Habilita logs de Debug do Wrapper.
+wrapper.debug = false
+
+# Log em console
+# --------------
+
+wrapper.console.loglevel = INFO
+wrapper.console.format = PM
+
+# Log em arquivo
+# --------------
+
+wrapper.logfile = ${wrapper_home}/log/wrapper.log
+wrapper.logfile.format = LPTM
+# Tamanho máximo (em bytes) do arquivo de log. Para tamanho ilimitado, utilize 0 (zero).
+# Pode ser abreviado com os sufixos 'k' (kb) or 'm' (mb). Exemplo: 10m = 10 megabytes.
+wrapper.logfile.maxsize = 10m
+# Número máximo de arquivos de log, ao atingir o limite, os arquivos mais antigos serão
+# deletados. Para quantidade ilimitada, utilize 0 (zero).
+wrapper.logfile.maxfiles = 10
+
+# Log do sistema (sys/event)
+# --------------------------
+
+wrapper.syslog.loglevel = NONE
 
 # ================================================================= #
 # Exit Code Properties
@@ -141,33 +205,3 @@ wrapper.jmx = true
 wrapper.jmx.rmi.port = 12345
 wrapper.jmx.rmi.user = senior
 wrapper.jmx.rmi.password = senior
-
-# ================================================================= #
-# LOG
-# ================================================================= #
-
-# Habilita logs de Debug do Wrapper.
-# wrapper.debug = TRUE
-
-# Log em console
-# --------------
-
-wrapper.console.loglevel = INFO
-wrapper.console.format = PM
-
-# Log em arquivo
-# --------------
-
-wrapper.logfile = ${wrapper_home}/log/wrapper.log
-wrapper.logfile.format = LPTM
-# Tamanho máximo (em bytes) do arquivo de log. Para tamanho ilimitado, utilize 0 (zero).
-# Pode ser abreviado com os sufixos 'k' (kb) or 'm' (mb). Exemplo: 10m = 10 megabytes.
-wrapper.logfile.maxsize = 10m
-# Número máximo de arquivos de log, ao atingir o limite, os arquivos mais antigos serão
-# deletados. Para quantidade ilimitada, utilize 0 (zero).
-wrapper.logfile.maxfiles = 10
-
-# Log do sistema (sys/event)
-# --------------------------
-
-wrapper.syslog.loglevel = NONE

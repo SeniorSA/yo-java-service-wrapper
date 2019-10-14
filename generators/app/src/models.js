@@ -22,13 +22,16 @@ class WrapperConfig {
         /** Mínima versão requerida da JVM */
         this.javaMinVersion = null;
 
+        /** Diretório do JAVA HOME */
+        this.javaHome = null;
+
         /**
          * Tipo de codificação dos arquivos, quando informado é utilizado como argumento -Dfile.encoding da JVM.
          */
         this.jvmEncoding = 'UTF-8';
 
         /** Classe principal do wrapper. */
-        this.wrapperMainClass = null;
+        this.wrapperMainClass = 'org.rzo.yajsw.app.WrapperJVMMain';
 
         /** Classe principal da aplicação. */
         this.appMainClass = null;

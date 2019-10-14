@@ -92,7 +92,7 @@ const SERVICE_PROMPTS = [
     }, {
         name: 'serviceStartType',
         required: true,
-        default: ServiceStartType.AUTO_START,
+        default: ServiceStartType.DELAY_START,
         message: 'Qual é o tipo de inicialização do serviço?',
         choices: [{
             name: 'Automático',
@@ -113,17 +113,9 @@ const JVM_PROMPTS = [
         required: false,
         message: 'Qual é a classe principal da aplicação? (Deixe em branco para utilizar a classe principal do jar)',
     }, {
-        name: 'wrapperMainClass',
-        required: true,
-        default: 'org.rzo.yajsw.app.WrapperJVMMain',
-        message: 'Qual é a classe executada quando o wrapper inicia a aplicação?',
-        choices: [{
-            name: 'YAJSW WrapperMain',
-            value: 'org.rzo.yajsw.app.WrapperJVMMain'
-        }, {
-            name: 'Tanuki Software WrapperJarApp (não exige classe principal da aplicação)',
-            value: 'org.tanukisoftware.wrapper.WrapperJarApp'
-        }]
+        name: 'javaHome',
+        required: false,
+        message: 'Informe o diretório para o Java HOME (JDK/JRE)? (Deixe em branco para utilizar o padrão do sistema)',
     }, {
         name: 'jvmEncoding',
         required: false,
