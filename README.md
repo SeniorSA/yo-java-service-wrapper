@@ -1,6 +1,10 @@
 # java-service-wrapper
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+[![npm][npm-image]][npm-url] [![npm downloads][npm-downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > JHipster module, Gerador de Java Service Wrapper base da Fábrica de Software da [Senior Sistemas][senior].
+
+[npm-image]: https://img.shields.io/npm/v/generator-java-service-wrapper.svg
+[npm-downloads-image]: https://img.shields.io/npm/dt/generator-java-service-wrapper.svg
+[npm-url]: https://www.npmjs.com/package/generator-java-service-wrapper
 
 # Introduction
 
