@@ -1,5 +1,11 @@
 const FrameworkConfig = require('./framework-config');
-const { PREFIX_ALTERNATIVE_QUESTION, SERVICE_PROMPTS, JVM_PROMPTS, Validators, Choices } = require('./prompts');
+const {
+    PREFIX_ALTERNATIVE_QUESTION,
+    SERVICE_PROMPTS,
+    JVM_PROMPTS,
+    Validators,
+    Choices
+} = require('./prompts');
 
 const prompts = [
     ...SERVICE_PROMPTS,
@@ -21,9 +27,7 @@ const prompts = [
 ];
 
 module.exports = class SpringBootConfig extends FrameworkConfig {
-
     constructor() {
         super(prompts);
     }
-
-}
+};

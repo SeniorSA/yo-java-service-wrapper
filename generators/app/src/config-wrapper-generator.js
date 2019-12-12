@@ -15,11 +15,11 @@ function createConfigFromAnswers(answers) {
     const config = new WrapperConfig();
     config.workingDir = '';
 
-    for (const answerName in answers) {
+    Object.keys(answers).forEach((answerName) => {
         if (typeof config[answerName] !== 'undefined') {
             config[answerName] = answers[answerName];
         }
-    }
+    });
 
     return config;
 }
@@ -29,25 +29,22 @@ function parseWrapperConfig(config) {
         throw new Error('A configuração do Wrapper não pode ser nula.');
     }
 
-    const rawTemplate = require('../templates/wrapper.njk');
+    const rawTemplate = require('../templates/wrapper.conf.njk'); // eslint-disable-line global-require
     const template = nunjucks.compile(rawTemplate);
-
     return template.render({ config });
 }
 
 function validateConfig(config, prompts) {
-    for (const field in config) {
-        const prompt = prompts.find(p => p.name === field);
-        if (!prompt) {
-            continue;
-        }
+    Object.keys(config).forEach((configField) => {
+        const prompt = prompts.find(p => p.name === configField);
+        if (prompt) {
+            const fieldValue = config[configField];
 
-        const fieldValue = config[field];
-
-        if (!fieldValue && prompt.required) {
-            throw new Error(`A configuração ${field} não foi encontrada/informada.`);
+            if (!fieldValue && prompt.required) {
+                throw new Error(`A configuração ${configField} não foi encontrada/informada.`);
+            }
         }
-    };
+    });
 }
 
 module.exports = createWrapperConfig;

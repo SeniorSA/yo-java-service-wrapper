@@ -1,7 +1,6 @@
 const chalk = require('chalk');
 
 module.exports = class PromptBuilder {
-
     constructor(frameworkConfig) {
         this.frameworkConfig = frameworkConfig;
         this.wrapperConfigDefaultValues = [];
@@ -13,12 +12,12 @@ module.exports = class PromptBuilder {
     }
 
     build() {
-        this.wrapperConfigDefaultValues.forEach(defaults => {
+        this.wrapperConfigDefaultValues.forEach((defaults) => {
             this.frameworkConfig.applyPromptsDefaultValues(defaults);
         });
 
         return this.frameworkConfig.prompts
-            .map(frameworkPrompt => this._buildCliPromptFor(frameworkPrompt))
+            .map(frameworkPrompt => this._buildCliPromptFor(frameworkPrompt));
     }
 
     _buildCliPromptFor(frameworkPrompt) {
@@ -34,5 +33,4 @@ module.exports = class PromptBuilder {
 
         return promptQuestion;
     }
-
-}
+};

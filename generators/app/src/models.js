@@ -1,5 +1,25 @@
-class WrapperConfig {
+const ServiceStartType = Object.freeze({
+    AUTO_START: 'AUTO_START',
+    DELAY_START: 'DELAY_START',
+    DEMAND_START: 'DEMAND_START',
+});
 
+const Framework = Object.freeze({
+    JSPARE: 'VERTX_JSPARE',
+    SPRING_BOOT: 'SPRING_BOOT'
+});
+
+const Constants = Object.freeze({
+    APP_JAR_NAME: 'app.jar',
+    CONSOLE_COLOR_GREY: '\u001B[90m',
+    CONSOLE_COLOR_RESET: '\u001B[39m',
+    TITLE: 'Gerador de Wrapper (YAJSW) Senior-FSW',
+    FOLDER_WRAPPER: 'service-wrapper',
+    FOLDER_WEBROOT: 'webroot',
+    FOLDER_CONFIGURATIONS: 'conf'
+});
+
+class WrapperConfig {
     constructor() {
         /** Nome de exibição do serviço quando executado via console, pode conter espaços. */
         this.consoleTitle = null;
@@ -58,39 +78,11 @@ class WrapperConfig {
         /** [Opcional] Lista de parâmetros adicionais da JVM. */
         this.jvmArguments = [];
     }
-
 }
-
-const ServiceStartType = Object.freeze({
-
-    AUTO_START: 'AUTO_START',
-    DELAY_START: 'DELAY_START',
-    DEMAND_START: 'DEMAND_START',
-
-});
-
-const Framework = Object.freeze({
-
-    JSPARE: 'VERTX_JSPARE',
-    SPRING_BOOT: 'SPRING_BOOT'
-
-});
-
-const Constants = Object.freeze({
-
-    APP_JAR_NAME: 'app.jar',
-    CONSOLE_COLOR_GREY: '\u001B[90m',
-    CONSOLE_COLOR_RESET: '\u001B[39m',
-    TITLE: 'Gerador de Wrapper (YAJSW) Senior-FSW',
-    FOLDER_WRAPPER: 'service-wrapper',
-    FOLDER_WEBROOT: 'webroot',
-    FOLDER_CONFIGURATIONS: 'conf'
-
-});
 
 module.exports = {
     WrapperConfig,
     ServiceStartType,
     Framework,
     Constants
-}
+};

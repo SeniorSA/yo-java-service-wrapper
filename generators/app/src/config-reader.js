@@ -3,17 +3,12 @@ const xml2js = require('xml2js');
 const { WrapperConfig } = require('./models');
 
 class DefaultConfigReader {
-
-    constructor() { }
-
     read() {
         return Promise.resolve(new WrapperConfig());
     }
-
 }
 
 class MavenConfigReader extends DefaultConfigReader {
-
     constructor(pomFileDir) {
         super();
         this._pomFileDir = pomFileDir;
@@ -21,18 +16,18 @@ class MavenConfigReader extends DefaultConfigReader {
 
     read() {
         return new Promise((resolve, reject) => {
-            super.read().then(config => {
+            super.read().then((config) => {
                 const pomXmlContent = fs.readFileSync(this._pomFileDir);
                 xml2js.parseString(pomXmlContent, (error, result) => {
                     if (error) {
                         reject({
                             message: '[MavenConfigReader] Falha ao ler configurações do pom.xml.',
-                            error: error
+                            error
                         });
                     }
 
                     const pom = result.project;
-                    this._extractInfoFromPom(config, pom)
+                    this._extractInfoFromPom(config, pom);
 
                     resolve(config);
                 });
@@ -76,11 +71,9 @@ class MavenConfigReader extends DefaultConfigReader {
 
         return '';
     }
-
 }
 
 class NodeConfigReader extends DefaultConfigReader {
-
     constructor(packageJsonFileDir) {
         super();
         this._packageJsonFileDir = packageJsonFileDir;
@@ -90,15 +83,10 @@ class NodeConfigReader extends DefaultConfigReader {
         // TODO
         throw new Error('[NodeConfigReader] Ainda não implementado.');
     }
-
-}
-
-class wrapperConfigReader extends DefaultConfigReader {
-
 }
 
 module.exports = {
     DefaultConfigReader,
     MavenConfigReader,
     NodeConfigReader
-}
+};

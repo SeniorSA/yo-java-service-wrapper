@@ -27,8 +27,8 @@
 #********************************************************************
 wrapper.working.dir=
 
-# Java Main class.  
-# YAJSW: default is "org.rzo.yajsw.app.WrapperJVMMain" 
+# Java Main class.
+# YAJSW: default is "org.rzo.yajsw.app.WrapperJVMMain"
 # DO NOT SET THIS PROPERTY UNLESS YOU HAVE YOUR OWN IMPLEMENTATION
 # wrapper.java.mainclass=
 
@@ -72,8 +72,8 @@ wrapper.java.app.mainclass=
 #********************************************************************
 # Application Account
 # Equivalent to Posix sudo or windows runas
-# Note Posix: 
-#     <group>\<user> (note: use \\ in configuration file). 
+# Note Posix:
+#     <group>\<user> (note: use \\ in configuration file).
 #     If no group is configured default group of the user is used
 #********************************************************************
 #wrapper.app.account=
@@ -193,12 +193,12 @@ wrapper.ntservice.description=yajsw
 # Wrapper Posix Daemon Properties
 #********************************************************************
 # Directory in which to create and execute daemon init scripts. Default: /etc/init.d
-#wrapper.daemon.dir = 
+#wrapper.daemon.dir =
 
 # Directory where to store the wrapper pid file. Default: /var/run
-#wrapper.daemon.pid.dir = 
+#wrapper.daemon.pid.dir =
 
-# Directory in which to create K... and S... links. 
+# Directory in which to create K... and S... links.
 # Default: <wrapper.daemon.dir>/rcX.d
 # For Ubuntu set to /etc/rcX.d
 # The following grooy script should set it correctly for most distros
@@ -213,11 +213,11 @@ wrapper.daemon.run_level_dir=${if (new File('/etc/rc0.d').exists()) return '/etc
 # Wrapper System Tray Properties
 #********************************************************************
 # enable system tray
-wrapper.tray = true
+wrapper.tray = false
 
 # TCP/IP port. If none is defined multicast discovery is used to find the port
 # Set the port in case multicast is not possible.
-wrapper.tray.port = 15002
+#wrapper.tray.port = 15002
 
 # icon file to use, per default a console icon is used
 #wrapper.tray.icon=
@@ -257,7 +257,7 @@ wrapper.filter.script.0.args=Exception
 #wrapper.jmx = true
 
 # JMX RMI port. default is 1099
-#wrapper.jmx.rmi.port = 
+#wrapper.jmx.rmi.port =
 
 # JMX RMI credentials
 # mandatory if accessing from remote server
@@ -270,17 +270,17 @@ wrapper.filter.script.0.args=Exception
 # Number of seconds to allow between the time that the Wrapper starts the application
 # and the  application logon to the wrapper.
 # Default: 30 seconds
-#wrapper.startup.timeout = 
+#wrapper.startup.timeout =
 
-# Number of seconds to allow between the time that the Wrapper asks the application to shutdown and the time that the JVM shuts down. 
+# Number of seconds to allow between the time that the Wrapper asks the application to shutdown and the time that the JVM shuts down.
 # Default: 30 seconds
-#wrapper.shutdown.timeout = 
+#wrapper.shutdown.timeout =
 
 # Number of seconds the wrapper waits for a ping message from the java application.
 # If no heart beat is received within a timeout the wrapper assumes that the application
 # is non responsive and will restart it.
 # Default: 30 seconds
-#wrapper.ping.timeout = 
+#wrapper.ping.timeout =
 
 
 

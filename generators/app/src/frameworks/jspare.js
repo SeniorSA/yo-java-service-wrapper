@@ -1,8 +1,14 @@
 const ncp = require('ncp').ncp;
 const FrameworkConfig = require('./framework-config');
-const { WrapperConfig, Constants } = require('./../models');
+const { Constants } = require('./../models');
 const discoverFilesByExtension = require('../utils/file-utils').discoverFilesByExtension;
-const { PREFIX_ALTERNATIVE_QUESTION, SERVICE_PROMPTS, JVM_PROMPTS, Validators, Choices } = require('./prompts');
+const {
+    PREFIX_ALTERNATIVE_QUESTION,
+    SERVICE_PROMPTS,
+    JVM_PROMPTS,
+    Validators,
+    Choices
+} = require('./prompts');
 
 const prompts = [
     ...SERVICE_PROMPTS,
@@ -23,16 +29,16 @@ const prompts = [
         name: 'verticleClass',
         required: true,
         message: 'Qual é a classe Verticle da aplicação?',
-        choices: answers => {
+        choices: (answers) => {
             const jarPath = (answers.jarPathManual || answers.jarPath).replace(/\\/g, '/');
             const targetPath = jarPath.substring(0, jarPath.lastIndexOf('/'));
             const classesPath = `${targetPath}/classes/`;
 
             return discoverFilesByExtension(classesPath, ['.class'])
                 .filter(filePath => /Verticle/.test(filePath))
-                .map(filePath => {
-                    const classReference = filePath.match(/(?:classes[\/\\])(.*)\.class/)[1].replace(/[\/\\]/g, '.')
-                    return { name: classReference, value: classReference }
+                .map((filePath) => {
+                    const classReference = filePath.match(/(?:classes[/\\])(.*)\.class/)[1].replace(/[/\\]/g, '.');
+                    return { name: classReference, value: classReference };
                 }).concat({
                     name: 'Outro: informar manualmente',
                     value: Choices.ANSWER_MANUAL
@@ -59,10 +65,10 @@ const prompts = [
         name: 'webDistFolder',
         required: false,
         message: 'Informe o diretório contendo os arquivos de distribuição do Front-end da aplicação (relativo ao sistema):',
-        validate: input => {
+        validate: (input) => {
             if (input === '/') {
                 return 'Você tem certeza que este diretório está correto?';
-            } else if (input !== '') {
+            } if (input !== '') {
                 return Validators.directoryExists(input);
             }
             return true;
@@ -78,7 +84,6 @@ const prompts = [
 ];
 
 module.exports = class JspareConfig extends FrameworkConfig {
-
     static get CONFIG_FILE() {
         return 'jspare-conf.json';
     }
@@ -109,7 +114,7 @@ module.exports = class JspareConfig extends FrameworkConfig {
         const promiseWebRoot = new Promise((resolve, reject) => {
             if (answers.webDistFolder) {
                 const projectWebRootDir = `${Constants.FOLDER_WRAPPER}/${Constants.FOLDER_WEBROOT}`;
-                ncp(answers.webDistFolder, projectWebRootDir, error => error ? reject(error) : resolve());
+                ncp(answers.webDistFolder, projectWebRootDir, error => (error ? reject(error) : resolve()));
             } else {
                 resolve();
             }
@@ -118,10 +123,9 @@ module.exports = class JspareConfig extends FrameworkConfig {
         const promiseConfig = new Promise((resolve, reject) => {
             const jspareConfigFileDir = answers.verticleConfManual || answers.verticleConf;
             const projectJspareConfigFileDir = `${Constants.FOLDER_WRAPPER}/${Constants.FOLDER_CONFIGURATIONS}/${JspareConfig.CONFIG_FILE}`;
-            ncp(jspareConfigFileDir, projectJspareConfigFileDir, error => error ? reject(error) : resolve());
+            ncp(jspareConfigFileDir, projectJspareConfigFileDir, error => (error ? reject(error) : resolve()));
         });
 
         return Promise.all([promiseWebRoot, promiseConfig]);
     }
-
-}
+};

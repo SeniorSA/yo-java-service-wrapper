@@ -7,31 +7,27 @@ const PREFIX_ALTERNATIVE_QUESTION = chalk.green('  \\- ');
 
 const Validators = {
 
-    directoryExists: input => {
-        return new Promise((resolve, reject) => {
-            fs.stat(input, (err, stats) => {
-                if (err || !stats.isDirectory()) {
-                    reject(`Diretório não encontrado: ${input}`)
-                } else {
-                    resolve(true);
-                }
-            });
+    directoryExists: input => new Promise((resolve, reject) => {
+        fs.stat(input, (err, stats) => {
+            if (err || !stats.isDirectory()) {
+                reject(`Diretório não encontrado: ${input}`);
+            } else {
+                resolve(true);
+            }
         });
-    },
+    }),
 
-    fileExists: input => {
-        return new Promise((resolve, reject) => {
-            fs.stat(input, (err, stats) => {
-                if (err || !stats.isFile()) {
-                    reject(`Arquivo não encontrado: ${input}`)
-                } else {
-                    resolve(true);
-                }
-            });
+    fileExists: input => new Promise((resolve, reject) => {
+        fs.stat(input, (err, stats) => {
+            if (err || !stats.isFile()) {
+                reject(`Arquivo não encontrado: ${input}`);
+            } else {
+                resolve(true);
+            }
         });
-    }
+    })
 
-}
+};
 
 const Choices = {
 
@@ -41,19 +37,17 @@ const Choices = {
         return () => {
             const rootPath = fs.realpathSync('');
             return discoverRelativeFilesByExtension('', fileExtensions)
-                .map(filePath => {
-                    return {
-                        name: filePath.replace(rootPath, ''),
-                        value: filePath
-                    }
-                }).concat({
+                .map(filePath => ({
+                    name: filePath.replace(rootPath, ''),
+                    value: filePath
+                })).concat({
                     name: 'Outro: informar manualmente',
                     value: Choices.ANSWER_MANUAL
                 });
-        }
+        };
     }
 
-}
+};
 
 const SERVICE_PROMPTS = [
     {
@@ -65,7 +59,7 @@ const SERVICE_PROMPTS = [
         name: 'serviceName',
         required: true,
         message: 'Qual é o nome do serviço? (Não pode conter espaços, ex.: senior_app)',
-        validate: input => {
+        validate: (input) => {
             if (!input) {
                 return false;
             }
@@ -133,4 +127,3 @@ module.exports = {
     PREFIX_ALTERNATIVE_QUESTION
 
 };
-

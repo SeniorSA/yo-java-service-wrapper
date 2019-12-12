@@ -46,19 +46,18 @@ wrapper.daemon.run_level_dir = ${if (new File('\/etc\/rc0.d').exists()) return '
 # Especificação do JDK/JRE a ser utilizado para executar a aplicação.
 # Caso não informado será utilizada a JDK/JRE padrão do sistema.
 {% if config.javaHome -%}
-    set.JAVA_HOME = {{ config.javaHome }}
-    wrapper.java = %JAVA_HOME%/bin/java.exe
-    wrapper.java.library.path.1 = %JAVA_HOME%/bin
-    wrapper.java.command = "%JAVA_HOME%/bin/java"
-    wrapper.java.command.64bit = true
+set.JAVA_HOME = {{ config.javaHome }}
+wrapper.java = %JAVA_HOME%/bin/java.exe
+wrapper.java.library.path.1 = %JAVA_HOME%/bin
+wrapper.java.command = "%JAVA_HOME%/bin/java"
+wrapper.java.command.64bit = true
 {% else -%}
-    # set.JAVA_HOME=${wrapper_home}/Java/jre1.8.0_201
-    # wrapper.java = %JAVA_HOME%/bin/java.exe
-    # wrapper.java.library.path.1 = %JAVA_HOME%/bin
-    # wrapper.java.command = "%JAVA_HOME%/bin/java"
-    # wrapper.java.command.64bit = true
+# set.JAVA_HOME=${wrapper_home}/Java/jre1.8.0_201
+# wrapper.java = %JAVA_HOME%/bin/java.exe
+# wrapper.java.library.path.1 = %JAVA_HOME%/bin
+# wrapper.java.command = "%JAVA_HOME%/bin/java"
+# wrapper.java.command.64bit = true
 {% endif %}
-
 # Configura as condições para a busca automática por JVM (Apenas Windows).
 # wrapper.java.command.minVersion=1.8
 # wrapper.java.command.maxVersion=1.8
@@ -88,7 +87,6 @@ wrapper.java.app.jar = {{ config.workingDir }}/lib/{{ config.jar }}
 {% else -%}
     # wrapper.java.classpath.1 =
 {% endfor %}
-
 # Classe principal da aplicação. Não é requerido quando utilizado com org.tanukisoftware.wrapper.WrapperJarApp.
 {% if config.appMainClass -%}
     wrapper.java.app.mainclass = {{ config.appMainClass }}
@@ -105,7 +103,6 @@ wrapper.java.app.jar = {{ config.workingDir }}/lib/{{ config.jar }}
 {% else -%}
     # wrapper.working.dir =
 {% endif %}
-
 # Classe executada quando o wrapper inicia a aplicação. Essa classe precisa implementar
 # a interface WrapperListener ou garantr que a classe WrapperManager está inicializada.
 # Mais detalhes na seção de integração da documentação.

@@ -1,10 +1,9 @@
-const { Constants, WrapperConfig } = require('../models');
 const escapeUnicode = require('escape-unicode');
+const { Constants, WrapperConfig } = require('../models');
 
 const REGEX_SPECIAL_CHARACTERS = /[^\w\s-]/g;
 
 module.exports = class FrameworkConfig {
-
     constructor(prompts) {
         this.prompts = prompts;
     }
@@ -14,7 +13,7 @@ module.exports = class FrameworkConfig {
     }
 
     configure(wrapperConfig, answers) {
-        wrapperConfig.workingDir = '${wrapper_home}';
+        wrapperConfig.workingDir = '${wrapper_home}'; // eslint-disable-line no-template-curly-in-string
         wrapperConfig.serviceName = `senior-${wrapperConfig.serviceName}`;
         wrapperConfig.serviceDisplayName = this._escapeUnicode(`Senior - ${wrapperConfig.serviceDisplayName}`);
         wrapperConfig.serviceDescription = this._escapeUnicode(wrapperConfig.serviceDescription);
@@ -31,17 +30,16 @@ module.exports = class FrameworkConfig {
     }
 
     applyPromptsDefaultValues(wrapperConfig) {
-        for (const currentCfg in wrapperConfig) {
+        Object.keys(wrapperConfig).forEach((currentCfg) => {
             const cfgProp = this.prompts.find(prompt => prompt.name === currentCfg);
 
             if (cfgProp && wrapperConfig[currentCfg]) {
                 cfgProp.default = wrapperConfig[currentCfg];
             }
-        }
+        });
     }
 
     install(wrapperConfig, answers) {
         return Promise.resolve();
     }
-
-}
+};
